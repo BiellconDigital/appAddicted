@@ -1,0 +1,26 @@
+{
+  "name": "appAddicted",
+  "version": "0.0.1",
+  "homepage": "https://github.com/BiellconDigital/appAddicted",
+  "authors": [
+    "tonyprr <tonyprr@gmail.com>"
+  ],
+  "description": "App Facebook",
+  "main": "public_html/css/main.css",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.2.0",
+    "bootstrap-additions": "~0.2.2",
+    "font-awesome": "~4.0.3",
+    "html5shiv": "~3.7.0",
+    "modernizr": "~2.7.1"
+  }
+}
