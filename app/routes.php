@@ -36,7 +36,7 @@ Route::get('login/fb', function() {
     
 //    $facebook = new Facebook(Config::get('facebook'));
 // Login Healper with reditect URI
-    $helper = new FacebookRedirectLoginHelper( 'http://localhost/appAddicted/public/login/fb/callback' );
+    $helper = new FacebookRedirectLoginHelper( Config::get('app')['url'] . '/login/fb/callback' );
 
     try {
          $session = $helper->getSessionFromRedirect();
