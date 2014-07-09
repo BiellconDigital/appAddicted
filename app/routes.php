@@ -16,18 +16,62 @@ Route::get('/', function()
 */
 use Facebook\FacebookSession;
 use Facebook\Helpers\FacebookRedirectLoginHelper;
+use Facebook\Helpers\FacebookCanvasLoginHelper;
+use Facebook\Helpers\FacebookPageTabHelper;
+use Facebook\Helpers\FacebookSignedRequestFromInputHelper;
 use Facebook\Exceptions\FacebookRequestException;
-use Facebook\Exceptions\FacebookSDKException;
 use Facebook\FacebookRequest;
 
 
 Route::get('/', function()
 {
     $data = array();
+    $signed_request = "nada";
+    FacebookSession::setDefaultApplication(Config::get('facebook')['appId'],Config::get('facebook')['secret']);
+    
+//    $helper = new FacebookCanvasLoginHelper();
+//    $he = FacebookSignedRequestFromInputHelper::class;
+    
+    // init login helper
+    $helper = new FacebookRedirectLoginHelper( Config::get('app')['url'] . '/login/fb/callback' );
+
+    // init page tab helper
+    $pageHelper = new FacebookPageTabHelper();
+
+    // get session from the page
+    $session = $pageHelper->getSession();
+    
+    $isLiked = $pageHelper->isLiked();
+    if (!$isLiked) {
+        return Redirect::to('/fb/noliked')->with('message', 'PRIMERO DALE ME GUSTA ');
+    }
     if (Auth::check()) {
         $data = Auth::user();
     }
-    return View::make('user', array('data'=>$data));
+    
+//    try {
+//      $session = $helper->getSession();
+//    } catch (FacebookRequestException $ex) {
+//            Session::flash('message', $ex->getMessage());
+//    } catch (\Exception $ex) {
+//            Session::flash('message', $ex->getMessage());
+//    }
+    //$graphObject = "nada";
+//    if ($session) {
+//        $request = new FacebookRequest(
+//          $session,
+//          'GET',
+//          '/me/likes/217498855042371'
+//        );
+//        $response = $request->execute();
+//        $graphObject = $response->getGraphObject();
+  //  }
+    return View::make('user', array('data'=>$data, 'data2'=>$signed_request));
+});
+
+Route::get('fb/noliked', function()
+{
+     return View::make('noliked');
 });
 
 Route::get('login/fb', function() {

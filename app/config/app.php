@@ -27,7 +27,7 @@ return array(
 	*/
 
 //	'url' => 'http://localhost',
-	'url' => 'http://www.analising.com/appAddicted/public',
+	'url' => 'https://www.addicted-cyzone.com',
 
 	/*
 	|--------------------------------------------------------------------------
