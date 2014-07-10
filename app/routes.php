@@ -106,7 +106,7 @@ Route::get('login/fb', function() {
     }
     else
     {
-        return Redirect::to($helper->getLoginUrl(array('email')));
+        return Redirect::to($helper->getLoginUrl(array('email', 'user_friends')));
     }    
 });
 
