@@ -154,3 +154,5 @@ Route::get('logout', function() {
     return Redirect::to('/');
 });
 
+Route::any("/inscripcion/form", 'InscripcionController@form');
+Route::any("/inscripcion/save", 'InscripcionController@save');
