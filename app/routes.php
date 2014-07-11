@@ -37,9 +37,19 @@ Route::get('/', function()
 
     // init page tab helper
     $pageHelper = new FacebookPageTabHelper();
-
+    $pageHelper->state = "12345FDFDGFD22";
+    $pageHelper->instantiateSignedRequest();
     // get session from the page
     $session = $pageHelper->getSession();
+    
+    $srGet = $pageHelper->getRawSignedRequest();
+    var_dump($srGet);
+    
+    $srPost = $pageHelper->getRawSignedRequestFromPost();
+    var_dump($srPost);
+    
+    $srCookie = $pageHelper->getRawSignedRequestFromCookie();
+    var_dump($srCookie);
     
     $isLiked = $pageHelper->isLiked();
     if (!$isLiked) {
