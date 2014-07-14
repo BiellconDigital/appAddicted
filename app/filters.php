@@ -1,4 +1,5 @@
 <?php
+session_start();
 
 /*
 |--------------------------------------------------------------------------
@@ -10,6 +11,9 @@
 | application. Here you may also register your custom route filters.
 |
 */
+use Facebook\FacebookSession;
+use Facebook\Helpers\FacebookPageTabHelper;
+use Facebook\Helpers\FacebookRedirectLoginHelper;
 
 App::before(function($request)
 {
@@ -87,4 +91,30 @@ Route::filter('csrf', function()
 	{
 		throw new Illuminate\Session\TokenMismatchException;
 	}
+});
+
+Route::filter('auth-facebook', function()
+{
+    FacebookSession::setDefaultApplication(Config::get('facebook')['appId'],Config::get('facebook')['secret']);
+    
+    $pageHelper = new FacebookPageTabHelper(Config::get('facebook')['appId'],Config::get('facebook')['secret']);
+    $helper = new FacebookRedirectLoginHelper( Config::get('app')['url'] . '/login/fb/callback' );
+    
+    $isLiked = $pageHelper->isLiked();
+    if (!$isLiked) {
+        return Redirect::to('/noliked')->with('message', 'PRIMERO DALE ME GUSTA ');
+        //return Redirect::to('/fb/noauth')->with('url', $helper->getLoginUrl(array('email', 'user_friends')));
+        //return Redirect::to('/inscripcion')->with('url', $helper->getLoginUrl(array('email', 'user_friends')));
+    }
+    $session = $pageHelper->getSession();
+
+    if(!isset($session))
+    {
+        // Login URL if session not found
+        //return Redirect::to('/fb/noliked')->with('message', 'PARTICIPA ');
+        return Redirect::to('/noauth');
+                //->with('url', $helper->getLoginUrl(array('email', 'user_friends')));
+    }
+
+    
 });

@@ -1,6 +1,6 @@
 <?php
 
-class HomeController extends BaseController {
+class CategoryController extends BaseController {
 
 	/*
 	|--------------------------------------------------------------------------
@@ -15,9 +15,19 @@ class HomeController extends BaseController {
 	|
 	*/
 
-	public function home()
+	public function index()
 	{
-		return View::make('home');
+            
+            $categories = Category::all();
+            
+            return View::make('categories')
+                    ->with('categories', $categories);
 	}
+        
+        public function amigos($idCate) {
+            
+            return View::make('amigos')
+                    ->with('message', $idCate);
+        }
 
 }

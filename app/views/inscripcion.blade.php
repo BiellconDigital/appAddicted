@@ -1,42 +1,44 @@
 @extends('layouts/layout')
 
 @section('content')
-	@if(Session::has('message'))
-		<div class="alert alert-dismissable">
-		  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-		  {{ Session::get('message')}}
-		</div>
-	@endif
-
-{{ Form::open(["url" => "/inscripcion/save","method" => "post","autocomplete" => "off", "role" => "form"]) }}
-    <div class="form-group">
-        {{ Form::text("Nombre", Input::old("Nombre"), ["placeholder" => "Nombre", "class" => "form-control"]) }}
+    @if(Session::has('message'))
+        <div class="alert alert-dismissable">
+          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+          {{ Session::get('message')}}
+        </div>
+    @endif
+    <div class="row">
+        <div class="col-sm-5 col-sm-offset-7 col-xs-5 col-xs-offset-7">
+            <div class="thumbnail" id="formInscripcion">
+            {{ Form::open(["url" => "/inscripcion/save","method" => "post", "autocomplete" => "off", "role" => "form"]) }}
+                <div class="form-group">
+                    {{ Form::text("form_nombre", Input::old("form_nombre"), ["placeholder" => "Nombre", "class" => "form-control"]) }}
+                </div>
+                <div class="form-group">
+                    {{ Form::text("form_ape_paterno", Input::old("form_ape_paterno"), ["placeholder" => "Apellido Paterno", "class" => "form-control"]) }}
+                </div>
+                <div class="form-group">
+                    {{ Form::text("form_ape_materno", Input::old("form_ape_materno"), ["placeholder" => "Apellido Materno", "class" => "form-control"]) }}
+                </div>
+                <div class="form-group">
+                    {{ Form::text("form_pais", Input::old("form_pais"), ["placeholder" => "País", "class" => "form-control"]) }}
+                </div>
+                <div class="form-group">
+                    {{ Form::text("form_email", Input::old("form_email"), ["placeholder" => "Correo", "class" => "form-control"]) }}
+                </div>
+                <div class="checkbox">
+                  <label>
+                    {{ Form::checkbox("form_acepta_term", Input::old("form_acepta_term"), ["placeholder" => "Nombre", "class" => "form-control"]) }}
+                    He leido las instrucciones. los Terminos de uso. las politicas de uso de cyzone y estoy de acuerdo
+                    </label>
+                </div>
+                <div class="form-group text-center">
+                    {{ Form::submit("Guardar", ["class" => "btn btn-default text-center"]) }}
+                </div>
+            {{ Form::close() }}
+            </div>
+        </div>
     </div>
-    {{ Form::submit("Guardar") }}
-{{ Form::close() }}
 
-        <form role="form">
-          <div class="form-group">
-            <input type="text" class="form-control" id="InputNombre" name="InputNombre" placeholder="Nombre">
-          </div>
-          <div class="form-group">
-            <input type="text" class="form-control" id="InputNombre" name="InputNombre" placeholder="Apellido Paterno">
-          </div>
-          <div class="form-group">
-            <input type="text" class="form-control" id="InputNombre" name="InputNombre" placeholder="Apellido Materno">
-          </div>
-          <div class="form-group">
-            <input type="text" class="form-control" id="InputNombre" name="InputNombre" placeholder="País">
-          </div>
-          <div class="form-group">
-            <input type="email" class="form-control" id="InputNombre" name="InputNombre" placeholder="Correo">
-          </div>
-          <div class="checkbox">
-            <label>
-              <input type="checkbox"> Check me out
-            </label>
-          </div>
-          <button type="submit" class="btn btn-default">Submit</button>
-        </form>
 
 @stop
