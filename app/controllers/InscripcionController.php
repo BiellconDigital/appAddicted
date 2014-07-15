@@ -44,8 +44,9 @@ class InscripcionController extends BaseController {
                         ->with('message', 'Sucedió un error en la inscripción.')
                         ->withInput();
             }
+	    Auth::login($user);
 
-            return Redirect::route('inscripcion');
+            return Redirect::route('categorias');
             
         }
 

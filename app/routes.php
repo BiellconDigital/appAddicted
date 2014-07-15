@@ -21,6 +21,7 @@ use Facebook\FacebookRequest;
 Route::model('user', 'User');
 
 Route::post('/', array('before' => 'auth-facebook', 'uses' => 'HomeController@home'));
+//Route::get('/', array('before' => 'auth-facebook', 'uses' => 'HomeController@home'));
 //Route::post('/', array('uses' => 'HomeController@home'));
 
 Route::get('noliked', function()

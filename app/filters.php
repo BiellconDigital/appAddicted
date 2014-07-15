@@ -112,7 +112,7 @@ Route::filter('auth-facebook', function()
     {
         // Login URL if session not found
         //return Redirect::to('/fb/noliked')->with('message', 'PARTICIPA ');
-        return Redirect::to('/noauth');
+        return Redirect::to('/noauth')->with('message', 'No esta autorizado.');
                 //->with('url', $helper->getLoginUrl(array('email', 'user_friends')));
     }
 

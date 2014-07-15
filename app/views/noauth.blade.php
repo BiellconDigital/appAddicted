@@ -1,10 +1,10 @@
 @extends('layouts/layout')
 
 @section('content')
-	@if(Session::has('url'))
+	@if(Session::has('message'))
 		<div class="alert alert-dismissable">
 		  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-		  {{ Session::get('url')}}
+		  {{ Session::get('message')}}
 		</div>
 	@endif
         
@@ -50,9 +50,13 @@
                                     {
                                              FB.api('/me', function(response)
                                              {
+						console.log('redirigiendo callback....');
                                                     window.location = "https://www.addicted-cyzone.com/index.php/login/fb/callback";
                                              });
-                                    }
+                                    } else {
+				    	console.log('User cancelled login or did not fully authorize.');
+				    }
+
                             }, { scope: 'read_stream, email, user_birthday, user_friends' });
                     }
             });

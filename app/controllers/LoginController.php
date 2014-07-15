@@ -22,20 +22,20 @@ class LoginController extends BaseController {
 
 	public function fbCallback()
 	{
-            $code = Input::get('code');
-            if (strlen($code) == 0)  return Redirect::to('/')->with('message', 'Se ha producido un error al comunicarse con Facebook.');
+//            $code = Input::get('code');
+//            if (strlen($code) == 0)  return Redirect::to('/noauth')->with('message', 'Se ha producido un error al comunicarse con Facebook.');
 
             FacebookSession::setDefaultApplication(Config::get('facebook')['appId'],Config::get('facebook')['secret']);
-            //$pageHelper = new FacebookPageTabHelper(Config::get('facebook')['appId'],Config::get('facebook')['secret']);
+            $pageHelper = new FacebookPageTabHelper(Config::get('facebook')['appId'],Config::get('facebook')['secret']);
             $helper = new FacebookRedirectLoginHelper( Config::get('app')['url'] . '/login/fb/callback' );
-
-            $session = $helper->getSessionFromRedirect();
-         
-            $uid = $session->getUserId();
+	    $session = $pageHelper->getSession();
+//            $session = $helper->getSessionFromRedirect();
+//	    $uid = $session->getSignedRequestProperty('user_id');       
+            $uid = $pageHelper->getUserId();
             //$facebook = new Facebook(Config::get('facebook'));
             //$uid = $facebook->getUser();
 
-            if ($uid == 0) return Redirect::to('/')->with('message', 'Hubo un error');
+            if ($uid == 0) return Redirect::to('/noauth')->with('message', 'Hubo un error');
 
             $request = new FacebookRequest( $session, 'GET', '/me' );
             $response = $request->execute();
@@ -67,10 +67,11 @@ class LoginController extends BaseController {
             if ($user->inscrito) {
                 return Redirect::to('/categorias')->with('message', 'Logged in with Facebook');
             } else {
-                return View::make('inscripcion');
+//                return View::make('inscripcion');
+		return Redirect::route('inscripcion', array('user' => $user));
             }
 
-            Auth::login($user);
+//            Auth::login($user);
 
             //return Redirect::to('/')->with('message', 'Logged in with Facebook');
 	}
