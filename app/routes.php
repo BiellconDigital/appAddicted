@@ -18,6 +18,8 @@ use Facebook\Helpers\FacebookRedirectLoginHelper;
 use Facebook\Exceptions\FacebookRequestException;
 use Facebook\FacebookRequest;
 
+Route::model('user', 'User');
+
 Route::post('/', array('before' => 'auth-facebook', 'uses' => 'HomeController@home'));
 //Route::post('/', array('uses' => 'HomeController@home'));
 
@@ -68,7 +70,7 @@ Route::get('login/fb', function() {
 });
 
 
-Route::get('login/fb/callback', array('uses' => 'LoginController@fbCallback'));
+Route::any('login/fb/callback', array('uses' => 'LoginController@fbCallback'));
 
 Route::get('logout', function() {
     Auth::logout();
@@ -76,8 +78,11 @@ Route::get('logout', function() {
 });
 
 //Route::get('/inscripcion', array('uses' => 'InscripcionController@form'));
-Route::get('/inscripcion', array('before' => 'auth-facebook', 'uses' => 'InscripcionController@form'));
-Route::post('/inscripcion/save', array('before' => 'auth-facebook', 'uses' => 'InscripcionController@save'));
-Route::get('/categorias', array('before' => 'auth-facebook', 'uses' => 'CategoryController@index'));
-Route::get('/categorias/amigos/{idCate}', array('before' => 'auth-facebook', 'uses' => 'CategoryController@amigos'));
+Route::get('inscripcion/{user}', array('as'  => 'inscripcion', 
+    'before' => 'auth-facebook', 'uses' => 'InscripcionController@form'));
+Route::post('inscripcion/update{id}', array('as'  => 'inscripcion.update', 
+    'before' => 'auth-facebook|csrf', 'uses' => 'InscripcionController@update'))->where('id', '[0-9]+');
+Route::get('categorias', array('as'  => 'categorias', 
+    'before' => 'auth-facebook|auth', 'uses' => 'CategoryController@index'));
+Route::get('categorias/amigos/{idCate}', array('before' => 'auth-facebook|auth', 'uses' => 'CategoryController@amigos'));
 

@@ -10,7 +10,9 @@
     <div class="row">
         <div class="col-sm-5 col-sm-offset-7 col-xs-5 col-xs-offset-7">
             <div class="thumbnail" id="formInscripcion">
-            {{ Form::open(["url" => "/inscripcion/save","method" => "post", "autocomplete" => "off", "role" => "form"]) }}
+            {{ Form::model($user, array('route' => array('inscripcion.update', $user->id), , "role" => "form")) }}
+                {{ Form::hidden("inscrito", "true")) }}
+                {{ Form::token(); }}
                 <div class="form-group">
                     {{ Form::text("form_nombre", Input::old("form_nombre"), ["placeholder" => "Nombre", "class" => "form-control"]) }}
                 </div>

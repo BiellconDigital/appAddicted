@@ -50,7 +50,7 @@ class LoginController extends BaseController {
                 $user->name = $me->getFirstName() . ' '. $me->getLastName();
                 $user->email = $me->getEmail();
                 $user->photo = 'https://graph.facebook.com/'. $me->getUsername() .'/picture?type=large';
-
+                $user->inscrito = false;
                 $user->save();
 
                 $profile = new Profile();
@@ -61,12 +61,21 @@ class LoginController extends BaseController {
 
             $profile->access_token = $session->getAccessToken();
             $profile->save();
+            $profile->autorizado = true;
             $user = $profile->user;
+            
+            if ($user->inscrito) {
+                return Redirect::to('/categorias')->with('message', 'Logged in with Facebook');
+            } else {
+                return View::make('inscripcion');
+            }
 
             Auth::login($user);
 
             //return Redirect::to('/')->with('message', 'Logged in with Facebook');
-            return View::make('inscripcion');
 	}
 
+        public function fbLogin($param) {
+            
+        }
 }
