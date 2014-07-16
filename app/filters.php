@@ -13,7 +13,7 @@ session_start();
 */
 use Facebook\FacebookSession;
 use Facebook\Helpers\FacebookPageTabHelper;
-use Facebook\Helpers\FacebookRedirectLoginHelper;
+use Facebook\Helpers\FacebookJavaScriptLoginHelper;
 
 App::before(function($request)
 {
@@ -98,8 +98,6 @@ Route::filter('auth-facebook', function()
     FacebookSession::setDefaultApplication(Config::get('facebook')['appId'],Config::get('facebook')['secret']);
     
     $pageHelper = new FacebookPageTabHelper(Config::get('facebook')['appId'],Config::get('facebook')['secret']);
-    //$helper = new FacebookRedirectLoginHelper( Config::get('app')['url'] . '/login/fb/callback' );
-    $pageHelper = new FacebookJavaScriptLoginHelper();
     
     $isLiked = $pageHelper->isLiked();
     if (!$isLiked) {
@@ -116,6 +114,17 @@ Route::filter('auth-facebook', function()
         return Redirect::to('/noauth')->with('message', 'No esta autorizado.');
                 //->with('url', $helper->getLoginUrl(array('email', 'user_friends')));
     }
+});
 
+Route::filter('auth-js-facebook', function()
+{
+    FacebookSession::setDefaultApplication(Config::get('facebook')['appId'],Config::get('facebook')['secret']);
+    $pageHelper = new FacebookJavaScriptLoginHelper();
     
+    $session = $pageHelper->getSession();
+    if(!isset($session))
+    {
+        return Redirect::to('/noauth')->with('message', 'No esta autorizado.');
+                //->with('url', $helper->getLoginUrl(array('email', 'user_friends')));
+    }
 });

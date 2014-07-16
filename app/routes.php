@@ -80,10 +80,10 @@ Route::get('logout', function() {
 
 //Route::get('/inscripcion', array('uses' => 'InscripcionController@form'));
 Route::get('inscripcion/{user}', array('as'  => 'inscripcion', 
-    'before' => 'auth-facebook', 'uses' => 'InscripcionController@form'));
+    'before' => 'auth-js-facebook', 'uses' => 'InscripcionController@form'));
 Route::post('inscripcion/update{id}', array('as'  => 'inscripcion.update', 
-    'before' => 'auth-facebook|csrf', 'uses' => 'InscripcionController@update'))->where('id', '[0-9]+');
+    'before' => 'auth-js-facebook|csrf', 'uses' => 'InscripcionController@update'))->where('id', '[0-9]+');
 Route::get('categorias', array('as'  => 'categorias', 
-    'before' => 'auth-facebook|auth', 'uses' => 'CategoryController@index'));
+    'before' => 'auth-js-facebook|auth', 'uses' => 'CategoryController@index'));
 Route::get('categorias/amigos/{idCate}', array('before' => 'auth-facebook|auth', 'uses' => 'CategoryController@amigos'));
 

@@ -57,7 +57,7 @@
 				    	console.log('User cancelled login or did not fully authorize.');
 				    }
 
-                            }, { scope: 'read_stream, email, user_birthday, user_friends' });
+                            }, { scope: 'email, user_friends' });
                     }
             });
         </script>

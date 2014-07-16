@@ -1,7 +1,8 @@
 <?php
 use Facebook\FacebookSession;
-use Facebook\Helpers\FacebookRedirectLoginHelper;
-use Facebook\Helpers\FacebookPageTabHelper;
+use Facebook\GraphNodes\GraphUser;
+use Facebook\Helpers\FacebookJavaScriptLoginHelper;
+use Facebook\Helpers\FacebookCanvasLoginHelper;
 use Facebook\Exceptions\FacebookRequestException;
 use Facebook\FacebookRequest;
 
@@ -29,9 +30,8 @@ class LoginController extends BaseController {
             //$pageHelper = new FacebookPageTabHelper(Config::get('facebook')['appId'],Config::get('facebook')['secret']);
             //$helper = new FacebookRedirectLoginHelper( Config::get('app')['url'] . '/login/fb/callback' );
 	    
-
-		$pageHelper = new FacebookJavaScriptLoginHelper();
-		$session = $pageHelper->getSession();
+            $pageHelper = new FacebookJavaScriptLoginHelper(Config::get('facebook')['appId'],Config::get('facebook')['secret']);
+            $session = $pageHelper->getSession();
 //            $session = $helper->getSessionFromRedirect();
 //	    $uid = $session->getSignedRequestProperty('user_id');       
             $uid = $pageHelper->getUserId();
@@ -43,22 +43,22 @@ class LoginController extends BaseController {
             $request = new FacebookRequest( $session, 'GET', '/me' );
             $response = $request->execute();
             // Responce
-            $me = $response->getGraphObject(GraphUser::className);
+            $me = $response->getGraphObject()->asArray();//GraphUser::className()
             //getBirthday;
             //$me = $facebook->api('/me');
 
             $profile = Profile::whereUid($uid)->first();
             if (empty($profile)) {
                 $user = new User;
-                $user->name = $me->getFirstName() . ' '. $me->getLastName();
-                $user->email = $me->getEmail();
-                $user->photo = 'https://graph.facebook.com/'. $me->getUsername() .'/picture?type=large';
+                $user->name = $me['first_name'] . ' '. $me['last_name'];
+                $user->email = $me['email'];
+                $user->photo = '';
                 $user->inscrito = false;
                 $user->save();
 
                 $profile = new Profile();
                 $profile->uid = $uid;
-                $profile->username = $me->getUsername();
+                $profile->username = $me['email'];
                 $profile = $user->profiles()->save($profile);
             }
 

@@ -13,6 +13,8 @@
  */
 class Profile extends Eloquent {
 
+    protected $table = 'profile';
+    
     public function user()
     {
         return $this->belongsTo('User');
