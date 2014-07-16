@@ -98,8 +98,7 @@ Route::filter('auth-facebook', function()
     FacebookSession::setDefaultApplication(Config::get('facebook')['appId'],Config::get('facebook')['secret']);
     
     $pageHelper = new FacebookPageTabHelper(Config::get('facebook')['appId'],Config::get('facebook')['secret']);
-    //$helper = new FacebookRedirectLoginHelper( Config::get('app')['url'] . '/login/fb/callback' );
-    $pageHelper = new FacebookJavaScriptLoginHelper();
+    $helper = new FacebookRedirectLoginHelper( Config::get('app')['url'] . '/login/fb/callback' );
     
     $isLiked = $pageHelper->isLiked();
     if (!$isLiked) {

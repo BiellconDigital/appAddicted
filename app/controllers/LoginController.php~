@@ -26,12 +26,9 @@ class LoginController extends BaseController {
 //            if (strlen($code) == 0)  return Redirect::to('/noauth')->with('message', 'Se ha producido un error al comunicarse con Facebook.');
 
             FacebookSession::setDefaultApplication(Config::get('facebook')['appId'],Config::get('facebook')['secret']);
-            //$pageHelper = new FacebookPageTabHelper(Config::get('facebook')['appId'],Config::get('facebook')['secret']);
-            //$helper = new FacebookRedirectLoginHelper( Config::get('app')['url'] . '/login/fb/callback' );
-	    
-
-		$pageHelper = new FacebookJavaScriptLoginHelper();
-		$session = $pageHelper->getSession();
+            $pageHelper = new FacebookPageTabHelper(Config::get('facebook')['appId'],Config::get('facebook')['secret']);
+            $helper = new FacebookRedirectLoginHelper( Config::get('app')['url'] . '/login/fb/callback' );
+	    $session = $pageHelper->getSession();
 //            $session = $helper->getSessionFromRedirect();
 //	    $uid = $session->getSignedRequestProperty('user_id');       
             $uid = $pageHelper->getUserId();
