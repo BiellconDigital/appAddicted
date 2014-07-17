@@ -1,4 +1,10 @@
 <?php
+use Facebook\FacebookSession;
+use Facebook\GraphNodes\GraphUser;
+use Facebook\Helpers\FacebookJavaScriptLoginHelper;
+use Facebook\Helpers\FacebookCanvasLoginHelper;
+use Facebook\Exceptions\FacebookRequestException;
+use Facebook\FacebookRequest;
 
 class CategoryController extends BaseController {
 
@@ -25,7 +31,20 @@ class CategoryController extends BaseController {
 	}
         
         public function amigos($idCate) {
-            
+            FacebookSession::setDefaultApplication(Config::get('facebook')['appId'],Config::get('facebook')['secret']);
+            //$pageHelper = new FacebookPageTabHelper(Config::get('facebook')['appId'],Config::get('facebook')['secret']);
+            //$helper = new FacebookRedirectLoginHelper( Config::get('app')['url'] . '/login/fb/callback' );
+	    
+            $pageHelper = new FacebookJavaScriptLoginHelper(Config::get('facebook')['appId'],Config::get('facebook')['secret']);
+            $session = $pageHelper->getSession();
+
+            /* make the API call */
+		$user_friends = (new FacebookRequest(
+		  $session, 'GET', '/me/friends'
+		))->execute()->getGraphObject(GraphUser::className());
+
+		print_r($user_friends);
+
             return View::make('amigos')
                     ->with('message', $idCate);
         }
