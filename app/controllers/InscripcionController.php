@@ -15,15 +15,18 @@ class InscripcionController extends BaseController {
 	|
 	*/
 
-	public function form(User $user)
+	public function form($id)
 	{
-            
+             $user = User::find($id);
 		return View::make('inscripcion')
                         ->with('user', $user);
 	}
         
         public function update($id) {
             $user = User::find($id);
+            
+            //echo $user->name;
+            //exit;
 
             $rules = array(
                 'form_email'    => array('required', 'email', 'unique:user,email'),
@@ -37,9 +40,8 @@ class InscripcionController extends BaseController {
                 // Validation has failed.
                 return Redirect::back()->with_input()->with_errors($validation);
             }
-
     
-            if (!$user->update(Input::all())) {
+            if (!$user->update(Input::except('_token'))) {
                 return Redirect::back()
                         ->with('message', 'Sucedió un error en la inscripción.')
                         ->withInput();

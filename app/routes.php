@@ -79,11 +79,11 @@ Route::get('logout', function() {
 });
 
 //Route::get('/inscripcion', array('uses' => 'InscripcionController@form'));
-Route::get('inscripcion/{user}', array('as'  => 'inscripcion', 
-    'before' => 'auth-js-facebook', 'uses' => 'InscripcionController@form'));
-Route::post('inscripcion/update{id}', array('as'  => 'inscripcion.update', 
+Route::get('inscripcion/{id}', array('as'  => 'inscripcion', 
+    'uses' => 'InscripcionController@form'));//'before' => 'auth-js-facebook', 
+Route::post('inscripcion/update/{id}', array('as'  => 'inscripcion.update', 
     'before' => 'auth-js-facebook|csrf', 'uses' => 'InscripcionController@update'))->where('id', '[0-9]+');
 Route::get('categorias', array('as'  => 'categorias', 
-    'before' => 'auth-js-facebook|auth', 'uses' => 'CategoryController@index'));
-Route::get('categorias/amigos/{idCate}', array('before' => 'auth-facebook|auth', 'uses' => 'CategoryController@amigos'));
+    'before' => 'auth', 'uses' => 'CategoryController@index'));//auth-js-facebook|
+Route::get('categorias/amigos/{idCate}', array('before' => 'auth', 'uses' => 'CategoryController@amigos'));//auth-facebook|
 

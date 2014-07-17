@@ -114,6 +114,7 @@ Route::filter('auth-facebook', function()
         return Redirect::to('/noauth')->with('message', 'No esta autorizado.');
                 //->with('url', $helper->getLoginUrl(array('email', 'user_friends')));
     }
+    Session::put('uid', $pageHelper->getUserId());
 });
 
 Route::filter('auth-js-facebook', function()

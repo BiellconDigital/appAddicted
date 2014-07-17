@@ -10,8 +10,7 @@
     <div class="row">
         <div class="col-sm-5 col-sm-offset-7 col-xs-5 col-xs-offset-7">
             <div class="thumbnail" id="formInscripcion">
-            {{ Form::model($user, array('route' => array('inscripcion.update', $user->id), , "role" => "form")) }}
-                {{ Form::hidden("inscrito", "true")) }}
+            {{ Form::model($user, array('route' => array('inscripcion.update', $user->id), "role" => "form")) }}
                 {{ Form::token(); }}
                 <div class="form-group">
                     {{ Form::text("form_nombre", Input::old("form_nombre"), ["placeholder" => "Nombre", "class" => "form-control"]) }}
@@ -26,7 +25,7 @@
                     {{ Form::text("form_pais", Input::old("form_pais"), ["placeholder" => "País", "class" => "form-control"]) }}
                 </div>
                 <div class="form-group">
-                    {{ Form::text("form_email", Input::old("form_email"), ["placeholder" => "Correo", "class" => "form-control"]) }}
+                    {{ Form::email("form_email", Input::old("form_email"), ["placeholder" => "Correo", "class" => "form-control"]) }}
                 </div>
                 <div class="checkbox">
                   <label>
@@ -34,6 +33,7 @@
                     He leido las instrucciones. los Terminos de uso. las politicas de uso de cyzone y estoy de acuerdo
                     </label>
                 </div>
+                {{ Form::hidden("inscrito", 1) }}
                 <div class="form-group text-center">
                     {{ Form::submit("Guardar", ["class" => "btn btn-default text-center"]) }}
                 </div>

@@ -71,7 +71,7 @@ class LoginController extends BaseController {
                 return Redirect::to('/categorias')->with('message', 'Logged in with Facebook');
             } else {
 //                return View::make('inscripcion');
-		return Redirect::route('inscripcion', array('user' => $user));
+		return Redirect::route('inscripcion', array('id' => $user->id));
             }
 
 //            Auth::login($user);
