@@ -13,11 +13,6 @@ Route::get('/', function()
 	return View::make('hello');
 });
 */
-use Facebook\FacebookSession;
-use Facebook\Helpers\FacebookRedirectLoginHelper;
-use Facebook\Exceptions\FacebookRequestException;
-use Facebook\FacebookRequest;
-
 Route::model('user', 'User');
 
 Route::post('/', array('before' => 'auth-facebook', 'uses' => 'HomeController@home'));
@@ -34,42 +29,10 @@ Route::get('noauth', function()
      return View::make('noauth');
 });
 
-Route::get('login/fb', function() {
-//    dd(Config::get('facebook'));
-    FacebookSession::setDefaultApplication(Config::get('facebook')['appId'],Config::get('facebook')['secret']);
-    
-//    $facebook = new Facebook(Config::get('facebook'));
-// Login Healper with reditect URI
-    $helper = new FacebookRedirectLoginHelper( Config::get('app')['url'] . '/login/fb/callback' );
-
-    try {
-         $session = $helper->getSessionFromRedirect();
-        //$loginUrl = $helper->getLoginUrl();
-    } catch(FacebookRequestException $ex) {
-      // When Facebook returns an error
-        echo "FacebookRequestException:: " . $ex->getMessage();
-    } catch(\Exception $ex) {
-      // When validation fails or other local issues
-//        echo "Exception 1:: " . $ex->getMessage();
-        
-    }
-    if(isset($session))
-    {
-      // Request for user data
-      $request = new FacebookRequest( $session, 'GET', '/me' );
-      $response = $request->execute();
-      // Responce
-      $data = $response->getGraphObject();
-
-      // Print data
-      echo  print_r( $data, 1 );
-    }
-    else
-    {
-        return Redirect::to($helper->getLoginUrl(array('email', 'user_friends')));
-    }    
+Route::get('error', function()
+{
+     return View::make('error');
 });
-
 
 Route::any('login/fb/callback', array('uses' => 'LoginController@fbCallback'));
 

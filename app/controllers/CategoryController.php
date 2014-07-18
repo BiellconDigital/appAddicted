@@ -37,16 +37,15 @@ class CategoryController extends BaseController {
 	    
             $pageHelper = new FacebookJavaScriptLoginHelper(Config::get('facebook')['appId'],Config::get('facebook')['secret']);
             $session = $pageHelper->getSession();
-
             /* make the API call */
-		$user_friends = (new FacebookRequest(
-		  $session, 'GET', '/me/friends'
-		))->execute()->getGraphObject(GraphUser::className());
+            $user_friends = (new FacebookRequest(
+              $session, 'GET', '/me/taggable_friends'
+            ))->execute()->getGraphObject()->asArray();
 
-		print_r($user_friends);
+            //print_r($user_friends);exit();
 
             return View::make('amigos')
-                    ->with('message', $idCate);
+                    ->with('user_friends', $user_friends['data']);
         }
 
 }

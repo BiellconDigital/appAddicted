@@ -25,7 +25,7 @@
                     {{ Form::text("form_pais", Input::old("form_pais"), ["placeholder" => "País", "class" => "form-control"]) }}
                 </div>
                 <div class="form-group">
-                    {{ Form::email("form_email", Input::old("form_email"), ["placeholder" => "Correo", "class" => "form-control"]) }}
+                    {{ Form::text("form_email", Input::old("form_email"), ["placeholder" => "Correo", "class" => "form-control"]) }}
                 </div>
                 <div class="checkbox">
                   <label>

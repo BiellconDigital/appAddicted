@@ -17,19 +17,26 @@ class HomeController extends BaseController {
 
 	public function home()
 	{
-            $uid = Session::get('uid');
-            $profile = Profile::whereUid($uid)->first();
-            $user = $profile->user;
-            
-            if ($user->inscrito) {
-                Auth::login($user);
-                return Redirect::to('/categorias')->with('message', 'Logged in with Facebook');
-            } else {
-//                return View::make('inscripcion');
-		return Redirect::route('inscripcion', array('id' => $user->id));
+            try {
+                $uid = Session::get('uid');
+                $profile = Profile::whereUid($uid)->first();
+                if (empty($profile)) {
+                    return Redirect::to('/noauth')->with('message', 'No está registrado para participar.');
+                }            
+                $user = $profile->user;
+
+                if ($user->inscrito) {
+                    Auth::login($user);
+                    return Redirect::to('/categorias')->with('message', 'Logged in with Facebook');
+                } else {
+    //                return View::make('inscripcion');
+                    return Redirect::route('inscripcion', array('id' => $user->id));
+                }
+
+                return View::make('home');
+            } catch (Exception $e) {
+                return Redirect::to('/error')->with('message', 'Ha ocurrido un error.');
             }
-            
-            return View::make('home');
 	}
 
 }

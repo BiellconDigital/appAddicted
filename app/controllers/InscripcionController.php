@@ -29,7 +29,7 @@ class InscripcionController extends BaseController {
             //exit;
 
             $rules = array(
-                'form_email'    => array('required', 'email', 'unique:user,email'),
+                'form_email'    => array('required', 'email'),//, 'unique:user,email'
                 'form_acepta_term' => array('required')
             );
 
