@@ -31,11 +31,11 @@
         window.fbAsyncInit = function () 
         {
             FB.init({
-                appId: '1483842561857563',
+                appId: '102227703153175',//1483842561857563
                 status  : true,
                 cookie: true,
                 xfbml: true,
-                version: 'v2.0',
+                version: 'v1.0',
                 oauth : true
             });
             FB.Canvas.setAutoGrow(true);

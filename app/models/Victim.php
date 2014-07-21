@@ -15,6 +15,6 @@ class Victim extends Eloquent {
 
         public function category()
 	{
-		return $this->belongsTo('Victim');
+		return $this->belongsTo('Category');
 	}
 }

@@ -1,15 +1,39 @@
 rosa = #7d6350
+@font-face {
+    font-family: 'Frutiger-Black';
+    font-style: normal;
+    font-weight: normal;
+    src:url('../fonts/FrutigerLTStd-Black.otf') format('truetype');
+}
+
+
 html
     padding 20px
 body
-    background-image url(../img/fondo.png)
+    background-image url(../img/bg.jpg)
     background-repeat no-repeat
     color white !important
 
 #formInscripcion
-    margin-top 180px
-    padding 3em 1em 0.5em 1em
-    background-color black
-    opacity 0.8
-    border none
-    border-radius 15px
+    background-image url(../img/bg-formulario.png)
+    background-repeat no-repeat
+    padding 3em 5em 1.5em 5em
+    margin auto
+    width 437px
+    height 455px
+
+.boton
+    border 2px solid white
+    background-color transparent
+    color white
+    font-family Frutiger-Black
+    font-size 1.5em
+    padding 0.4em 0.6em
+
+.icono-enviar
+    background-image url(../img/icono-enviar.png)
+    background-repeat no-repeat
+    color white !important
+    display inline
+    height 36px
+    width 40px

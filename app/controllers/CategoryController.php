@@ -39,13 +39,20 @@ class CategoryController extends BaseController {
             $session = $pageHelper->getSession();
             /* make the API call */
             $user_friends = (new FacebookRequest(
-              $session, 'GET', '/me/taggable_friends'
+              $session, 'GET', '/me/friends', array("fields" => "id,gender,name,picture"), 'v1.0'
             ))->execute()->getGraphObject()->asArray();
+            $friends = $user_friends['data'];
+            foreach ($friends as $key => $friend) {
+                if ($friend->gender == "female") {
+                    array_forget($friends, $key);
+                }
+            }
 
             //print_r($user_friends);exit();
 
             return View::make('amigos')
-                    ->with('user_friends', $user_friends['data']);
+                    ->with('user_friends', $friends)
+                    ->with('idCate', $idCate);
         }
 
 }

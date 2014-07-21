@@ -27,7 +27,8 @@ class HomeController extends BaseController {
 
                 if ($user->inscrito) {
                     Auth::login($user);
-                    return Redirect::to('/categorias')->with('message', 'Logged in with Facebook');
+                    return Redirect::to('/categorias');
+                            //->with('message', 'Logged in with Facebook');
                 } else {
     //                return View::make('inscripcion');
                     return Redirect::route('inscripcion', array('id' => $user->id));
@@ -39,4 +40,7 @@ class HomeController extends BaseController {
             }
 	}
 
+        public function invite() {
+                return View::make('invite');
+        }
 }

@@ -1,3 +1,6 @@
+@font-face{font-family:'Frutiger-Black';font-style:normal;font-weight:normal;src:url("../fonts/FrutigerLTStd-Black.otf") format('truetype')}
 html{padding:20px}
-body{background-image:url("../img/fondo.png");background-repeat:no-repeat;color:#fff !important}
-#formInscripcion{margin-top:180px;padding:3em 1em .5em 1em;background-color:#000;opacity:.8;border:none;border-radius:15px}
+body{background-image:url("../img/bg.jpg");background-repeat:no-repeat;color:#fff !important}
+#formInscripcion{background-image:url("../img/bg-formulario.png");background-repeat:no-repeat;padding:3em 5em 1.5em 5em;margin:auto;width:437px;height:455px}
+.boton{border:2px solid #fff;background-color:transparent;color:#fff;font-family:Frutiger-Black;font-size:1.5em;padding:.4em .6em}
+.icono-enviar{background-image:url("../img/icono-enviar.png");background-repeat:no-repeat;color:#fff !important;display:inline;height:36px;width:40px}

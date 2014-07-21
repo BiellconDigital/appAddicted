@@ -99,9 +99,9 @@ Route::filter('auth-facebook', function()
     
     $pageHelper = new FacebookPageTabHelper(Config::get('facebook')['appId'],Config::get('facebook')['secret']);
     
-    $isLiked = $pageHelper->isLiked();
+    $isLiked = $pageHelper->isLiked();//https://developers.facebook.com/docs/apps/review
     if (!$isLiked) {
-        return Redirect::to('/noliked')->with('message', 'PRIMERO DALE ME GUSTA ');
+        return Redirect::to('/noliked');//->with('message', 'PRIMERO DALE ME GUSTA ');
         //return Redirect::to('/fb/noauth')->with('url', $helper->getLoginUrl(array('email', 'user_friends')));
         //return Redirect::to('/inscripcion')->with('url', $helper->getLoginUrl(array('email', 'user_friends')));
     }
@@ -111,7 +111,7 @@ Route::filter('auth-facebook', function()
     {
         // Login URL if session not found
         //return Redirect::to('/fb/noliked')->with('message', 'PARTICIPA ');
-        return Redirect::to('/noauth')->with('message', 'No esta autorizado.');
+        return Redirect::to('/noauth');//->with('message', 'No esta autorizado.');
                 //->with('url', $helper->getLoginUrl(array('email', 'user_friends')));
     }
     Session::put('uid', $pageHelper->getUserId());
@@ -125,7 +125,7 @@ Route::filter('auth-js-facebook', function()
     $session = $pageHelper->getSession();
     if(!isset($session))
     {
-        return Redirect::to('/noauth')->with('message', 'No esta autorizado.');
+        return Redirect::to('/noauth');//->with('message', 'No esta autorizado.');
                 //->with('url', $helper->getLoginUrl(array('email', 'user_friends')));
     }
 });

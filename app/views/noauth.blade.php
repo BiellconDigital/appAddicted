@@ -8,8 +8,13 @@
 		</div>
 	@endif
         
+        <br/><br/><br/><br/><br/><br/><br/>
         <p class="text-center">
-            <a class="btn btn-lg btn-primary ingresar" href=" "><i class="icon-facebook"></i> Participa</a>
+            <img src="{{asset('img/logo-inicio.png')}}" />
+        </p>
+        <br/><br/><br/><br/><br/>
+        <p class="text-center">
+            <a class="boton ingresar" href=" ">Participa <i class=""><img src="{{asset('img/icono-enviar.png')}}" width="30" /></i></a>
         </p>
                     
         <script type="text/javascript">
@@ -46,13 +51,24 @@
                     {
                             FB.login(function (response)
                             {
+                                
                                     if (response.authResponse)
                                     {
                                              FB.api('/me', function(response)
                                              {
-						console.log('redirigiendo callback....');
-                                                    window.location = "https://www.addicted-cyzone.com/index.php/login/fb/callback";
+                                                 console.log(response);
+                                                if (response && !response.error_code) {
+                                                    if (response.gender === 'male') {
+                                                        window.location = "https://www.addicted-cyzone.com/index.php/nopermitdo";
+                                                    } else {
+                                                        console.log('redirigiendo callback....');
+                                                        window.location = "https://www.addicted-cyzone.com/index.php/login/fb/callback";
+                                                    }
+                                                } else {
+                                                    console.log('no se autorizo...');
+                                                }
                                              });
+                                             
                                     } else {
 				    	console.log('User cancelled login or did not fully authorize.');
 				    }

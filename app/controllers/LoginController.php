@@ -1,9 +1,7 @@
 <?php
 use Facebook\FacebookSession;
-use Facebook\GraphNodes\GraphUser;
+//use Facebook\GraphNodes\GraphUser;
 use Facebook\Helpers\FacebookJavaScriptLoginHelper;
-use Facebook\Helpers\FacebookCanvasLoginHelper;
-use Facebook\Exceptions\FacebookRequestException;
 use Facebook\FacebookRequest;
 
 class LoginController extends BaseController {
@@ -40,7 +38,7 @@ class LoginController extends BaseController {
 
             if ($uid == 0) return Redirect::to('/noauth')->with('message', 'Hubo un error');
 
-            $request = new FacebookRequest( $session, 'GET', '/me' );
+            $request = new FacebookRequest( $session, 'GET', '/me' , null, 'v1.0');
             $response = $request->execute();
             // Responce
             $me = $response->getGraphObject()->asArray();//GraphUser::className()
@@ -53,6 +51,7 @@ class LoginController extends BaseController {
                 $user->name = $me['first_name'] . ' '. $me['last_name'];
                 $user->email = $me['email'];
                 $user->photo = '';
+                $user->gender = $me['gender'];
                 $user->inscrito = false;
                 $user->save();
 

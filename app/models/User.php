@@ -9,7 +9,7 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 
 	use UserTrait, RemindableTrait;
 
-	protected $fillable = array('id', 'name', 'password', 'email', 'photo', 'inscrito'
+	protected $fillable = array('id', 'name', 'password', 'email', 'photo', 'gender', 'inscrito'
 				, 'form_nombre', 'form_ape_paterno', 'form_ape_materno', 'form_pais'
 				, 'form_email', 'form_acepta_term');
 	
@@ -61,4 +61,10 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	{
 		return $this->hasMany('Profile');
 	}
+
+	public function victims()
+	{
+		return $this->hasMany('Victim');
+	}
+        
 }

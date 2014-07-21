@@ -7,9 +7,9 @@
           {{ Session::get('message')}}
         </div>
     @endif
-    <div class="row">
-        <div class="col-sm-5 col-sm-offset-7 col-xs-5 col-xs-offset-7">
-            <div class="thumbnail" id="formInscripcion">
+    <img src="{{asset('img/logo-thums.png')}}" />
+    
+            <div class="text-center" id="formInscripcion">
             {{ Form::model($user, array('route' => array('inscripcion.update', $user->id), "role" => "form")) }}
                 {{ Form::token(); }}
                 <div class="form-group">
@@ -39,8 +39,6 @@
                 </div>
             {{ Form::close() }}
             </div>
-        </div>
-    </div>
 
 
 @stop
