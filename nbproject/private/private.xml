@@ -6,10 +6,9 @@
             <file>file:/D:/wamp2/www/appAddicted/app/controllers/CategoryController.php</file>
             <file>file:/D:/wamp2/www/appAddicted/app/controllers/VictimController.php</file>
             <file>file:/D:/wamp2/www/appAddicted/app/filters.php</file>
-            <file>file:/D:/wamp2/www/appAddicted/app/views/noauth.blade.php</file>
+            <file>file:/D:/wamp2/www/appAddicted/app/views/categories.blade.php</file>
             <file>file:/D:/wamp2/www/appAddicted/app/views/amigos.blade.php</file>
             <file>file:/D:/wamp2/www/appAddicted/app/routes.php</file>
-            <file>file:/D:/wamp2/www/appAddicted/app/controllers/LoginController.php</file>
             <file>file:/D:/wamp2/www/appAddicted/app/views/inscripcion.blade.php</file>
         </group>
     </open-files>

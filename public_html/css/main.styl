@@ -1,4 +1,6 @@
-rosa = #7d6350
+fucsia = #c30773
+morado = #791551
+
 @font-face {
     font-family: 'Frutiger-Black';
     font-style: normal;
@@ -6,29 +8,94 @@ rosa = #7d6350
     src:url('../fonts/FrutigerLTStd-Black.otf') format('truetype');
 }
 
+@font-face {
+    font-family: 'Frutiger-BlackCn';
+    font-style: normal;
+    font-weight: normal;
+    src:url('../fonts/FrutigerLTStd-BlackCn.otf');
+}
+
 
 html
-    padding 20px
+    padding 0
+    margin 0
+    width 100%
 body
     background-image url(../img/bg.jpg)
     background-repeat no-repeat
     color white !important
+    padding 0
+    margin 0
+    padding-top 18px
+    width 100%
+
+::-webkit-input-placeholder
+   color: fucsia
+   opacity: 0.7
+:-moz-placeholder
+   color: fucsia
+   opacity: 0.7
+::-moz-placeholder
+   color: fucsia
+   opacity: 0.7
+:-ms-input-placeholder
+   color: fucsia
+   opacity: 0.7
 
 #formInscripcion
     background-image url(../img/bg-formulario.png)
     background-repeat no-repeat
-    padding 3em 5em 1.5em 5em
+    padding 2.7em 4.7em 1.5em 4.7em
     margin auto
     width 437px
     height 455px
+    input[type='text']
+    input[type='date']
+        border-radius 0
+        color fucsia
+        font-size 1.2em
+        padding 2.5px 5px 1px 8px !important
+        width 100%
+    label
+        background-color white
+        color fucsia
+        padding 3px 8px !important
+        text-align left
+        width 100%
+#formInvitar
+    background-image url(../img/bg-invitar.png)
+    background-repeat no-repeat
+    padding 2.2em 1.5em
+    margin auto
+    width 437px
+    height 428px
+    .panel-amigos
+        height 330px
+        overflow auto
+        font-size 0.8em
+        .item-amigos
+            height 42px
+            margin-bottom 7px
+            ul.lista-amigos
+                margin 0
+                li
+                    padding 0
+                    margin 0
+
+.panel-addicted
+    margin 0.5em !important
 
 .boton
+.boton-small
     border 2px solid white
     background-color transparent
     color white
     font-family Frutiger-Black
     font-size 1.5em
-    padding 0.4em 0.6em
+    padding 0.3em 0.6em
+.boton-small
+    font-size 1.2em
+    font-family Frutiger-BlackCn
 
 .icono-enviar
     background-image url(../img/icono-enviar.png)

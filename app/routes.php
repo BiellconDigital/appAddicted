@@ -59,3 +59,6 @@ Route::any('victimas/votar', array('as'  => 'victim.votar',
 Route::get('nopermitdo', function() {
     return View::make('nopermitido')->with('message', "Sólo pueden concursar chicas!");
 });
+
+Route::get('ranking', array('as'  => 'ranking', 
+    'uses' => 'RankingController@index'));//auth-js-facebook|

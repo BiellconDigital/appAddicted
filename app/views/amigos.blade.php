@@ -7,31 +7,48 @@
               {{ Session::get('message')}}
             </div>
     @endif
-    <div class="row">
-        <div class="col-xs-12">
-            <h3>Seleccionar 3 amigos</h3>
-            <br/>
-        </div>
-        {{ Form::open(array('route' => array('victim.savevictims', $idCate), 'id' => 'formVictims', "name" => "formVictims",
+    
+    <img src="{{asset('img/logo-thums.png')}}" />
+    
+    {{ Form::open(array('route' => array('victim.savevictims', $idCate), 'id' => 'formVictims', "name" => "formVictims",
                     'method' => 'post', "role" => "form")) }}
-        @foreach($user_friends as $key => $friend)
-        
-        <div class="col-xs-4">
-            <div class="col-xs-5">
-                {{ Form::checkbox("victims", $friend->id, false) }}
-                <img src="{{ $friend->picture->data->url }}" class="img-responsive img-rounded" />
-                <br/><br/>
+        <div id="formInvitar" class="row">
+            <div class="col-xs-12">
+                <span>LISTA DE AMIGOS</span>
             </div>
-            <div class="col-xs-7">
-                    <h5>{{ $friend->name }}</h5> 
+            <div class="panel-amigos col-xs-12">
+                @foreach($user_friends as $key => $friend)
+                <div class="col-xs-6 item-amigos">
+                    <ul class="list-inline lista-amigos">
+                      <li>{{ Form::checkbox("victims", $friend->id, false) }}</li>
+                      <li><img src="{{ $friend->picture->data->url }}" class="img-rounded" width="29"/>&nbsp;&nbsp; </li>
+                      <li style="max-width: 85px;">{{ $friend->name }}</li>
+                    </ul>     
+                </div>
+                @endforeach
             </div>
         </div>
-        
-        @endforeach
-        {{ Form::close() }}
-    </div>
-    <a href="" class="sendRequest">Invitar</a>
+    {{ Form::close() }}
 
+    <div class="text-center">
+        <br/>
+        <a class="boton sendRequest" href="">
+            Invitar <i class=""><img src="{{asset('img/icono-enviar.png')}}" width="20" /></i>
+        </a> 
+    </div>
+
+    <div class="">
+        <br/><br/><br/><br/>
+        <a class="boton-small" href="{{route('categorias')}}">
+            Categorias <i class=""><img src="{{asset('img/icono-enviar.png')}}" width="20" /></i>
+        </a> 
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <a class="boton-small" href="{{route('ranking')}}">
+            Ranking <i class=""><img src="{{asset('img/icono-enviar.png')}}" width="20" /></i>
+        </a> 
+    </div>
+
+    
     <script type="text/javascript">
 
             jQuery(document).ready(function()
@@ -105,7 +122,7 @@
                         });                        
                         formVictims.submit();
                     } else {
-                      alert('Error while posting.');
+                      //alert('Error while posting.');
                     }
                 }
             );

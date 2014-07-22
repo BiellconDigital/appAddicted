@@ -7,26 +7,32 @@
           {{ Session::get('message')}}
         </div>
     @endif
-    <div class="row">
-        <div class="col-xs-12">
-            <h3>Seleccionar una categoria</h3>
-            <br/>
-        </div>
-        
-        @foreach($categories as $key => $category)
-        <div class="col-xs-4">
-            <div class="col-xs-5">
-                <img src="img/{{ $category->photo }}" class="img-responsive img-rounded" />
-                <br/><br/>
-            </div>
-            <div class="col-xs-7">
-                <a href="{{url('categorias/amigos/' . $category->id)}}">
-                    <h4>{{ $category->name }}</h4> 
-                </a>
-            </div>
-        </div>
-        @endforeach
+    <div class="text-center">
+        <img src="{{asset('img/logo-inicio.png')}}" width="150"/>
+        <br/><br/><br/><br/><br/>
     </div>
     
+    <div class="row">
+        @foreach($categories as $key => $category)
+        <div class="col-xs-4" >
+                <a href="{{url('categorias/amigos/' . $category->id)}}">
+                    <img src="{{asset('img/' . $category->photo)}}" class="img-responsive"/>
+                </a><br/>
+        </div>
+        @endforeach
+        
+    </div>
+    
+    <div class="">
+        <br/><br/><br/><br/><br/><br/>
+        <br/><br/><br/><br/><br/>
+        <a class="boton-small" href="{{route('categorias')}}">
+            Categorias <i class=""><img src="{{asset('img/icono-enviar.png')}}" width="20" /></i>
+        </a> 
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <a class="boton-small" href="{{route('ranking')}}">
+            Ranking <i class=""><img src="{{asset('img/icono-enviar.png')}}" width="20" /></i>
+        </a> 
+    </div>
 
 @stop
