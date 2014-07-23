@@ -24,32 +24,33 @@ class InscripcionController extends BaseController {
         
         public function update($id) {
             $user = User::find($id);
-            
-            //echo $user->name;
-            //exit;
-
             $rules = array(
-                'form_email'    => array('required', 'email'),//, 'unique:user,email'
+                'form_email'    => 'required|email',//, 'unique:user,email'
+                'form_nombre' => array('required', 'min:2'),
+                'form_ape_paterno' => array('required', 'min:2'),
+                'form_ape_materno' => array('required', 'min:2'),
+                'form_fecha_nacimiento' => array('required'),
+                'form_pais' => 'required|min:3',
                 'form_acepta_term' => array('required')
             );
 
             $validation = Validator::make(Input::all(), $rules);
-
-            if ($validation->fails())
+            if ($validation->fails() )
             {
                 // Validation has failed.
-                return Redirect::back()->with_input()->with_errors($validation);
+                //return Redirect::back()->with_input(Input::except('_token'))->with_errors($validation);
+                return Redirect::back()->with_input(Input::all())
+                        ->with('message', 'Ingrese todos los campos correctamente.');
             }
-    
+            
             if (!$user->update(Input::except('_token'))) {
                 return Redirect::back()
                         ->with('message', 'Sucedió un error en la inscripción.')
                         ->withInput();
             }
-	    Auth::login($user);
+            Auth::login($user);
 
             return Redirect::route('categorias');
-            
         }
 
 }

@@ -9,13 +9,17 @@
     @endif
     
     <img src="{{asset('img/logo-thums.png')}}" />
-    
+
     {{ Form::open(array('route' => array('victim.savevictims', $idCate), 'id' => 'formVictims', "name" => "formVictims",
-                    'method' => 'post', "role" => "form")) }}
+                    'method' => 'post', "role" => "form", "class" => "form-horizontal")) }}
         <div id="formInvitar" class="row">
-            <div class="col-xs-12">
-                <span>LISTA DE AMIGOS</span>
-            </div>
+                <div class="form-group has-feedback">
+                  <label class="control-label col-xs-5" for="inputSuccess3">LISTA DE AMIGOS</label>
+                  <div class="col-xs-7">
+                    <input type="text" class="form-control input-sm" id="inputSuccess3">
+                    <span class="glyphicon glyphicon-search form-control-feedback"></span>
+                  </div>
+                </div>
             <div class="panel-amigos col-xs-12">
                 @foreach($user_friends as $key => $friend)
                 <div class="col-xs-6 item-amigos">
