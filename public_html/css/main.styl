@@ -23,11 +23,13 @@ html
 body
     background-image url(../img/bg.jpg)
     background-repeat no-repeat
-    color white !important
     padding 0
     margin 0
     padding-top 18px
     width 100%
+
+.text-white
+    color white
 
 ::-webkit-input-placeholder
    color: fucsia
@@ -70,13 +72,18 @@ body
     width 437px
     height 428px
     .panel-amigos
-        height 330px
+        height 314px
         overflow auto
         font-size 0.8em
         .item-amigos
-            height 42px
-            margin-bottom 7px
+            height 45px
+            margin-bottom 8px
             ul.lista-amigos
+                position relative
+                top 50%
+                -webkit-transform translateY(-50%)
+                -ms-transform: translateY(-50%)
+                transform translateY(-50%)
                 margin 0
                 li
                     padding 0

@@ -7,20 +7,22 @@
               {{ Session::get('message')}}
             </div>
     @endif
-    
+
     <img src="{{asset('img/logo-thums.png')}}" />
 
     {{ Form::open(array('route' => array('victim.savevictims', $idCate), 'id' => 'formVictims', "name" => "formVictims",
                     'method' => 'post', "role" => "form", "class" => "form-horizontal")) }}
         <div id="formInvitar" class="row">
-                <div class="form-group has-feedback">
-                  <label class="control-label col-xs-5" for="inputSuccess3">LISTA DE AMIGOS</label>
-                  <div class="col-xs-7">
-                    <input type="text" class="form-control input-sm" id="inputSuccess3">
-                    <span class="glyphicon glyphicon-search form-control-feedback"></span>
-                  </div>
-                </div>
-            <div class="panel-amigos col-xs-12">
+            
+            <div class="form-group has-feedback">
+              <label class="control-label col-xs-5 text-white" for="inputSuccess3">LISTA DE AMIGOS</label>
+              <div class="col-xs-7">
+                <input type="text" class="form-control input-sm" id="inputSuccess3">
+                <span class="glyphicon glyphicon-search form-control-feedback"></span>
+              </div>
+            </div>
+            
+            <div class="panel-amigos col-xs-12 text-white">
                 @foreach($user_friends as $key => $friend)
                 <div class="col-xs-6 item-amigos">
                     <ul class="list-inline lista-amigos">
@@ -42,7 +44,7 @@
     </div>
 
     <div class="">
-        <br/><br/><br/><br/>
+        <br/><br/><br/>
         <a class="boton-small" href="{{route('categorias')}}">
             Categorias <i class=""><img src="{{asset('img/icono-enviar.png')}}" width="20" /></i>
         </a> 

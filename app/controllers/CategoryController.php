@@ -31,20 +31,30 @@ class CategoryController extends BaseController {
 	}
         
         public function amigos($idCate) {
+
             FacebookSession::setDefaultApplication(Config::get('facebook')['appId'],Config::get('facebook')['secret']);
             //$pageHelper = new FacebookPageTabHelper(Config::get('facebook')['appId'],Config::get('facebook')['secret']);
             //$helper = new FacebookRedirectLoginHelper( Config::get('app')['url'] . '/login/fb/callback' );
 	    
             $pageHelper = new FacebookJavaScriptLoginHelper(Config::get('facebook')['appId'],Config::get('facebook')['secret']);
             $session = $pageHelper->getSession();
-            /* make the API call */
-            $user_friends = (new FacebookRequest(
-              $session, 'GET', '/me/friends', array("fields" => "id,gender,name,picture"), 'v1.0'
-            ))->execute()->getGraphObject()->asArray();
-            $friends = $user_friends['data'];
-            foreach ($friends as $key => $friend) {
-                if ($friend->gender == "female") {
-                    array_forget($friends, $key);
+
+            if (Input::get('search')) {
+                $user_friends = (new FacebookRequest(
+                  $session, 'GET', '/me/friends', array("fields" => "id,gender,name,picture", "limit"  => 5), 'v1.0'
+                ))->execute()->getGraphObject()->asArray();
+                $friends = $user_friends['data'];
+                //select uid, name, sex from user where uid in (SELECT uid2 FROM friend WHERE uid1 = me())and (strpos(lower(name),'Jack')>=0 OR strpos(name,'Jack')>=0)
+            } else {
+                /* make the API call */
+                $user_friends = (new FacebookRequest(
+                  $session, 'GET', '/me/friends', array("fields" => "id,gender,name,picture", "limit"  => 5), 'v1.0'
+                ))->execute()->getGraphObject()->asArray();
+                $friends = $user_friends['data'];
+                foreach ($friends as $key => $friend) {
+                    if ($friend->gender == "female") {
+                        array_forget($friends, $key);
+                    }
                 }
             }
 

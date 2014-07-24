@@ -12,10 +12,13 @@
     <link rel="shortcut icon"  href="favicon.ico"><!-- Major Browsers -->
     <!--[if IE]><link rel="SHORTCUT ICON" href="favicon.ico"/><![endif]--><!-- Internet Explorer-->
     
-    <link rel="icon" href="favicon.ico" type="image/x-icon" />
+    {{ HTML::style('bower_components/normalize.css/normalize.css'); }}
     
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0-wip/css/bootstrap.min.css">
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css">
+    {{ HTML::style('bower_components/bootstrap/dist/css/bootstrap.min.css'); }}
+    {{ HTML::style('bower_components/bootstrap/dist/css/bootstrap.css.map'); }}
+
+    {{ HTML::style('bower_components/font-awesome/css/font-awesome.min.css'); }}
+    
     {{ HTML::style('css/main.css'); }}
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -59,7 +62,7 @@
       
 
     </div> <!-- /container -->
-    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0-wip/js/bootstrap.min.js"></script>
+    {{ HTML::script('bower_components/bootstrap/dist/js/bootstrap.min.js'); }}
 
     
   </body>
