@@ -9,6 +9,8 @@
             <file>file:/D:/wamp2/www/appAddicted/app/views/categories.blade.php</file>
             <file>file:/D:/wamp2/www/appAddicted/app/views/amigos.blade.php</file>
             <file>file:/D:/wamp2/www/appAddicted/app/routes.php</file>
+            <file>file:/D:/wamp2/www/appAddicted/app/views/invite.blade.php</file>
+            <file>file:/D:/wamp2/www/appAddicted/app/views/layouts/layout.blade.php</file>
             <file>file:/D:/wamp2/www/appAddicted/app/controllers/InscripcionController.php</file>
             <file>file:/D:/wamp2/www/appAddicted/app/views/inscripcion.blade.php</file>
         </group>

@@ -99,14 +99,31 @@
 
         sendRequest = function() {
            // Get the list of selected friends
-           var sendUIDs = '';
-           var mfsForm = document.getElementById('formVictims');
-             for(var i = 0; i < mfsForm.victims.length; i++) {
-               if(mfsForm.victims[i].checked) {
-                 sendUIDs += mfsForm.victims[i].value + ',';
-               }
+            var sendUIDs = '';
+            var contador = 0;
+            var mfsForm = document.getElementById('formVictims');
+            console.log(mfsForm.victims);
+            if(mfsForm.victims.length > 0) {
+                for(var i = 0; i < mfsForm.victims.length; i++) {
+                    if(mfsForm.victims[i].checked) {
+                        sendUIDs += mfsForm.victims[i].value + ',';
+                        contador++;
+                    }
+                }
+            } else {
+                if ($( "form input:checkbox" ).length > 0)
+                    if ($( "form input:checkbox" )[0].checked) {
+                        sendUIDs = $( "form input:checkbox" )[0].value;
+                     contador++;
+                    }
+            }
+             console.log(sendUIDs);
+             if (sendUIDs === '') {
+                 return;
              }
-
+             if (contador > 3) {
+                 return;
+             }
            // Use FB.ui to send the Request(s)
             FB.ui({method: 'apprequests',
                 to: sendUIDs,

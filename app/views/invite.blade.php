@@ -8,6 +8,6 @@
 		</div>
 	@endif
     <script type="text/javascript">
-        top.location.href = "https://www.facebook.com/studiomanda/app_1483842561857563";
+        top.location.href = "https://www.facebook.com/studiomanda/app_102227703153175";
     </script>
 @stop
