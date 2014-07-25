@@ -54,7 +54,6 @@ Route::any('categorias/amigos/{idCate}', array('as'  => 'categorias.friends',
 Route::post('victimas/registrarvictimas/{idCate}', array('as'  => 'victim.savevictims', 
     'before' => 'auth', 'uses' => 'VictimController@savevictims'));//auth-facebook|
 
-
 Route::any('victimas/votar', array('as'  => 'victim.votar', 
     'uses' => 'VictimController@votar'));//auth-facebook|
 
@@ -64,8 +63,3 @@ Route::get('nopermitdo', function() {
 
 Route::get('ranking', array('as'  => 'ranking', 
     'uses' => 'RankingController@index'));//auth-js-facebook|
-
-Route::get('video', array('as'  => 'video', 
-    'uses' => 'VideoController@index'));//auth-js-facebook|
-
-

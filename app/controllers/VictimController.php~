@@ -74,6 +74,6 @@ class VictimController extends BaseController {
         }
 
         public function votar() {
-                return View::make('video');
+                return View::make('votar');
         }
 }
