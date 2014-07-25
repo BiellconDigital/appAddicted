@@ -18,8 +18,22 @@ class InscripcionController extends BaseController {
 	public function form($id)
 	{
              $user = User::find($id);
-		return View::make('inscripcion')
-                        ->with('user', $user);
+	     $paises = array(
+		"Colombia" => "Colombia",
+		"Costa Rica" => "Costa Rica",
+		"Chile" => "Chile",
+		"Ecuador" => "Ecuador",
+		"El Salvador" => "El Salvador",
+		"Guatemala" => "Guatemala",
+		"México" => "México",
+		"Panamá" => "Panamá",
+		"Perú" => "Perú",
+		"Puerto Rico" => "Puerto Rico",
+		"República Dominicana" => "República Dominicana",
+		"Venezuela" => "Venezuela"
+		);
+		return View::make('inscripcion', array('user' => $user, 'paises' => $paises));
+//                        ->with('user', $user);
 	}
         
         public function update($id) {

@@ -10,14 +10,14 @@
 
     <img src="{{asset('img/logo-thums.png')}}" />
 
-    {{ Form::open(array('route' => array('victim.savevictims', $idCate), 'id' => 'formVictims', "name" => "formVictims",
+    {{ Form::open(array('route' => array('categorias.friends', $idCate), 'id' => 'formVictims', "name" => "formVictims",
                     'method' => 'post', "role" => "form", "class" => "form-horizontal")) }}
         <div id="formInvitar" class="row">
             
             <div class="form-group has-feedback">
-              <label class="control-label col-xs-5 text-white" for="inputSuccess3">LISTA DE AMIGOS</label>
+              <label class="control-label col-xs-5 text-white" for="search">LISTA DE AMIGOS</label>
               <div class="col-xs-7">
-                <input type="text" class="form-control input-sm" id="inputSuccess3">
+                <input type="text" class="form-control input-sm" id="search3" name="search">
                 <span class="glyphicon glyphicon-search form-control-feedback"></span>
               </div>
             </div>
@@ -125,7 +125,8 @@
                                 name: 'ids[]',
                                 value: value
                             }).appendTo(formVictims);
-                        });                        
+                        });
+			formVictims.action = "{{ URL::route('victim.savevictims', $idCate) }}";                        
                         formVictims.submit();
                     } else {
                       //alert('Error while posting.');

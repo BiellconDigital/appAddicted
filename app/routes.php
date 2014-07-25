@@ -48,7 +48,8 @@ Route::post('inscripcion/update/{id}', array('as'  => 'inscripcion.update',
     'before' => 'auth-js-facebook|csrf', 'uses' => 'InscripcionController@update'))->where('id', '[0-9]+');
 Route::get('categorias', array('as'  => 'categorias', 
     'before' => 'auth', 'uses' => 'CategoryController@index'));//auth-js-facebook|
-Route::any('categorias/amigos/{idCate}', array('before' => 'auth', 'uses' => 'CategoryController@amigos'));//auth-facebook|
+Route::any('categorias/amigos/{idCate}', array('as'  => 'categorias.friends',
+    'before' => 'auth', 'uses' => 'CategoryController@amigos'));//auth-facebook|
 
 Route::post('victimas/registrarvictimas/{idCate}', array('as'  => 'victim.savevictims', 
     'before' => 'auth', 'uses' => 'VictimController@savevictims'));//auth-facebook|

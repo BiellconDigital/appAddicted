@@ -39,18 +39,25 @@ class CategoryController extends BaseController {
             $pageHelper = new FacebookJavaScriptLoginHelper(Config::get('facebook')['appId'],Config::get('facebook')['secret']);
             $session = $pageHelper->getSession();
 
-            if (Input::get('search')) {
-                $user_friends = (new FacebookRequest(
-                  $session, 'GET', '/me/friends', array("fields" => "id,gender,name,picture", "limit"  => 5), 'v1.0'
-                ))->execute()->getGraphObject()->asArray();
-                $friends = $user_friends['data'];
+		$user_friends = (new FacebookRequest(
+		  $session, 'GET', '/me/friends', array("fields" => "id,gender,name,picture"), 'v1.0'
+		))->execute()->getGraphObject()->asArray();
+		$friends = $user_friends['data'];
+
+		$search = Input::get('search');
+            if (Request::isMethod('post') and $search != "") {
                 //select uid, name, sex from user where uid in (SELECT uid2 FROM friend WHERE uid1 = me())and (strpos(lower(name),'Jack')>=0 OR strpos(name,'Jack')>=0)
+                foreach ($friends as $key => $friend) {
+                    if ($friend->gender == "female") {
+                        array_forget($friends, $key);
+			continue;
+                    }
+                    if (substr_count($friend->name, $search) <= 0) {
+                        array_forget($friends, $key);
+                    }
+                }
+
             } else {
-                /* make the API call */
-                $user_friends = (new FacebookRequest(
-                  $session, 'GET', '/me/friends', array("fields" => "id,gender,name,picture", "limit"  => 5), 'v1.0'
-                ))->execute()->getGraphObject()->asArray();
-                $friends = $user_friends['data'];
                 foreach ($friends as $key => $friend) {
                     if ($friend->gender == "female") {
                         array_forget($friends, $key);

@@ -28,7 +28,7 @@
                 {{ Form::input('date', "form_fecha_nacimiento", Input::old("form_fecha_nacimiento"), ["class" => ""]) }}
             </div>
             <div class="form-group">
-                {{ Form::text("form_pais", Input::old("form_pais"), ["placeholder" => "País", "class" => ""]) }}
+		{{ Form::select('form_pais', $paises, Input::old("form_pais"), ["placeholder" => "País", "class" => ""]) }}
             </div>
             <div class="form-group">
                 {{ Form::text("form_email", Input::old("form_email"), ["placeholder" => "Correo", "class" => ""]) }}
