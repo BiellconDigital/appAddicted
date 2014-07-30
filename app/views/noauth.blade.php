@@ -2,20 +2,24 @@
 
 @section('content')
 	@if(Session::has('message'))
-		<div class="alert alert-dismissable">
+		<div class="alert alert-dismissable alert-danger">
 		  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
 		  {{ Session::get('message')}}
 		</div>
 	@endif
-        
-        <br/><br/><br/><br/><br/><br/><br/>
-        <p class="text-center">
-            <img src="{{asset('img/logo-inicio.png')}}" />
-        </p>
-        <br/><br/><br/><br/><br/>
-        <p class="text-center">
-            <a class="boton ingresar" href=" ">Participa <i class=""><img src="{{asset('img/icono-enviar.png')}}" width="30" /></i></a>
-        </p>
+
+        @if(!Session::has('friend'))
+            <br/><br/><br/><br/><br/><br/><br/>
+            <p class="text-center">
+                <img src="{{asset('img/logo-inicio.png')}}" />
+                <br/><br/><br/>
+                <img src="{{asset('img/cinta-inicio.png')}}" />
+            </p>
+            <br/><br/><br/><br/>
+            <p class="text-center">
+                <a class="boton ingresar" href="">Empieza aquí! <i class=""><img src="{{asset('img/icono-enviar.png')}}"/></i></a>
+            </p>
+        @endif
                     
         <script type="text/javascript">
 
@@ -32,6 +36,7 @@
 
                     iniciar = function()
                     {
+                        console.log('iniciando..');
                             FB.getLoginStatus(function (response) 
                             {				
                                             IsFacebookConnected();				
@@ -73,8 +78,14 @@
 				    	console.log('User cancelled login or did not fully authorize.');
 				    }
 
-                            }, { scope: 'email, user_friends' });
+                            }, { scope: 'email, user_friends, user_status, publish_stream' });
                     }
+                @if(Session::has('friend'))
+                    setTimeout(function() {
+                        iniciar();
+                    }, 2500);
+                @endif
+                    
             });
         </script>
 

@@ -96,7 +96,7 @@ return array(
 	|
 	*/
 
-	'cookie' => 'laravel_session',
+	'cookie' => 'laravelsession',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -135,6 +135,6 @@ return array(
 	|
 	*/
 
-	'secure' => false,
+	'secure' => true,
 
 );

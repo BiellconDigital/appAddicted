@@ -2,37 +2,35 @@
 
 @section('content')
     @if(Session::has('message'))
-        <div class="alert alert-dismissable">
+        <div class="alert alert-dismissable alert-info">
           <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
           {{ Session::get('message')}}
         </div>
     @endif
     <div class="text-center">
-        <img src="{{asset('img/logo-inicio.png')}}" width="150"/>
-        <br/><br/><br/><br/><br/>
+        <br/><br/>
+        <img src="{{asset('img/titulo-categorias.png')}}"/>
+        <br/><br/><br/><br/><br/><br/>
     </div>
     
-    <div class="row">
+    <div class="row" style="width: 88%;margin: auto;">
+        
         @foreach($categories as $key => $category)
-        <div class="col-xs-4" >
+        <div class="col-xs-6" style="height: 107px;margin-bottom: 14px;">
                 <a href="{{url('categorias/amigos/' . $category->id)}}">
                     <img src="{{asset('img/' . $category->photo)}}" class="img-responsive"/>
-                </a><br/>
+                </a>
         </div>
         @endforeach
         
     </div>
     
-    <div class="">
-        <br/><br/><br/><br/><br/><br/>
-        <br/><br/><br/><br/><br/>
-        <a class="boton-small" href="{{route('categorias')}}">
-            Categorias <i class=""><img src="{{asset('img/icono-enviar.png')}}" width="20" /></i>
-        </a> 
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <div class="text-center">
+        <br/><br/><br/>
         <a class="boton-small" href="{{route('ranking')}}">
-            Ranking <i class=""><img src="{{asset('img/icono-enviar.png')}}" width="20" /></i>
+            Mira el Ranking
         </a> 
     </div>
 
+    
 @stop

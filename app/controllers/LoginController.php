@@ -3,6 +3,7 @@ use Facebook\FacebookSession;
 //use Facebook\GraphNodes\GraphUser;
 use Facebook\Helpers\FacebookJavaScriptLoginHelper;
 use Facebook\FacebookRequest;
+use Facebook\Exceptions\FacebookAuthorizationException;
 
 class LoginController extends BaseController {
 
@@ -21,61 +22,65 @@ class LoginController extends BaseController {
 
 	public function fbCallback()
 	{
-//            $code = Input::get('code');
-//            if (strlen($code) == 0)  return Redirect::to('/noauth')->with('message', 'Se ha producido un error al comunicarse con Facebook.');
+            try {
+    //            $code = Input::get('code');
+    //            if (strlen($code) == 0)  return Redirect::to('/noauth')->with('message', 'Se ha producido un error al comunicarse con Facebook.');
 
-            FacebookSession::setDefaultApplication(Config::get('facebook')['appId'],Config::get('facebook')['secret']);
-            //$pageHelper = new FacebookPageTabHelper(Config::get('facebook')['appId'],Config::get('facebook')['secret']);
-            //$helper = new FacebookRedirectLoginHelper( Config::get('app')['url'] . '/login/fb/callback' );
-	    
-            $pageHelper = new FacebookJavaScriptLoginHelper(Config::get('facebook')['appId'],Config::get('facebook')['secret']);
-            $session = $pageHelper->getSession();
-//            $session = $helper->getSessionFromRedirect();
-//	    $uid = $session->getSignedRequestProperty('user_id');       
-            $uid = $pageHelper->getUserId();
-            //$facebook = new Facebook(Config::get('facebook'));
-            //$uid = $facebook->getUser();
+                FacebookSession::setDefaultApplication(Config::get('facebook')['appId'],Config::get('facebook')['secret']);
+                //$pageHelper = new FacebookPageTabHelper(Config::get('facebook')['appId'],Config::get('facebook')['secret']);
+                //$helper = new FacebookRedirectLoginHelper( Config::get('app')['url'] . '/login/fb/callback' );
 
-            if ($uid == 0) return Redirect::to('/noauth')->with('message', 'Hubo un error');
+                $pageHelper = new FacebookJavaScriptLoginHelper(Config::get('facebook')['appId'],Config::get('facebook')['secret']);
+                $session = $pageHelper->getSession();
+    //            $session = $helper->getSessionFromRedirect();
+    //	    $uid = $session->getSignedRequestProperty('user_id');       
+                $uid = $pageHelper->getUserId();
+                //$facebook = new Facebook(Config::get('facebook'));
+                //$uid = $facebook->getUser();
 
-            $request = new FacebookRequest( $session, 'GET', '/me' , null, 'v1.0');
-            $response = $request->execute();
-            // Responce
-            $me = $response->getGraphObject()->asArray();//GraphUser::className()
-            //getBirthday;
-            //$me = $facebook->api('/me');
+                if ($uid == 0) return Redirect::to('/noauth')->with('message', 'Hubo un error');
 
-            $profile = Profile::whereUid($uid)->first();
-            if (empty($profile)) {
-                $user = new User;
-                $user->name = $me['first_name'] . ' '. $me['last_name'];
-                $user->email = $me['email'];
-                $user->photo = '';
-                $user->gender = $me['gender'];
-                $user->inscrito = false;
-                $user->save();
+                $request = new FacebookRequest( $session, 'GET', '/me' , null, 'v1.0');
+                $response = $request->execute();
+                // Responce
+                $me = $response->getGraphObject()->asArray();//GraphUser::className()
+                //getBirthday;
+                //$me = $facebook->api('/me');
 
-                $profile = new Profile();
-                $profile->uid = $uid;
-                $profile->username = $me['email'];
-                $profile = $user->profiles()->save($profile);
+                $profile = Profile::whereUid($uid)->first();
+                if (empty($profile)) {
+                    $user = new User;
+                    $user->name = $me['first_name'] . ' '. $me['last_name'];
+                    $user->email = $me['email'];
+                    $user->photo = '';
+                    $user->gender = $me['gender'];
+                    $user->inscrito = false;
+                    $user->save();
+
+                    $profile = new Profile();
+                    $profile->uid = $uid;
+                    $profile->username = $me['email'];
+                    $profile = $user->profiles()->save($profile);
+                }
+
+                $profile->access_token = $session->getAccessToken();
+                $profile->autorizado = true;
+                $profile->save();
+                $user = $profile->user;
+
+                if ($user->inscrito) {
+                    return Redirect::to('/categorias')->with('message', 'Logged in with Facebook');
+                } else {
+    //                return View::make('inscripcion');
+                    return Redirect::route('inscripcion', array('id' => $user->id));
+                }
+
+    //            Auth::login($user);
+
+                //return Redirect::to('/')->with('message', 'Logged in with Facebook');
+            } catch (FacebookAuthorizationException $e) {
+                return Redirect::to('/sesionexpirada')->with('message', 'Su sesión ha expirado. Por favor haga click en reiniciar.');
             }
-
-            $profile->access_token = $session->getAccessToken();
-            $profile->save();
-            $profile->autorizado = true;
-            $user = $profile->user;
-            
-            if ($user->inscrito) {
-                return Redirect::to('/categorias')->with('message', 'Logged in with Facebook');
-            } else {
-//                return View::make('inscripcion');
-		return Redirect::route('inscripcion', array('id' => $user->id));
-            }
-
-//            Auth::login($user);
-
-            //return Redirect::to('/')->with('message', 'Logged in with Facebook');
 	}
 
         public function fbLogin($param) {

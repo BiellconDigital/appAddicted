@@ -7,7 +7,145 @@
 		  {{ Session::get('message')}}
 		</div>
 	@endif
+    <div class="text-center text-white">
+        <h2>HAS CONSEGUIDO UNA NUEVA VÍCTIMA!
+        <div class="text-right text-fucsia">
+            CON ÉL VAS {{ $totalVictimas }}
+        </div>
+        </h2>
+    </div>
+    <br/><br/>
+    
+    <div id="panelVideo" class="row font-frutiger">
+        <div class="col-xs-9">
+            <iframe width="100%" height="300" src="//www.youtube.com/embed/nQ5bAb3YQ6Y" frameborder="0" allowfullscreen></iframe>
+        </div>
+        <div class="col-xs-3" style="height: 300px;bottom: 1px;">
+            <img src="{{ $meVictim['picture']->data->url }}" class="img-responsive"/>
+        </div>
+    </div>
+    <br/>
+    <div class="text-right row">
+        <div class="col-xs-3 col-xs-offset-5">
+            <fb:like href="{{ URL::full() }}" layout="standard" action="like" show_faces="true" share="false"></fb:like>
+        </div>
+        <div class="col-xs-4">
+            <a class="sendPublish text-white" href="">
+                + Cuéntaselo a tus amigos
+            </a> 
+        </div>
+    </div>
+        
+        
+    <div class="text-center">
+        <br/><br/><br/>
+        <a class="boton-small" href="{{route('categorias')}}">
+            Reportar más victimas
+        </a> 
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <a class="boton-small" href="{{route('ranking')}}">
+            Mira el Ranking
+        </a> 
+    </div>
 
-	<iframe width="560" height="315" src="//www.youtube.com/embed/nQ5bAb3YQ6Y" frameborder="0" allowfullscreen></iframe>
+    <script type="text/javascript">
 
+        jQuery(document).ready(function()
+        {
+            console.log("entrado...");
+            jQuery(".sendPublish").bind("click",function(e)
+            {
+                    e.preventDefault();
+                    console.log("clic...");
+                    iniciar();
+
+            });
+
+            iniciar = function()
+            {
+                    FB.getLoginStatus(function (response) 
+                    {				
+                                    IsFacebookConnected();				
+                    });
+            }
+
+            IsFacebookConnected = function()
+            {
+                    FB.getLoginStatus(function (response) 
+                    {		    
+                            if (response.authResponse) {
+                                console.log(response);
+                                sendPublish(response.authResponse);
+                            }
+                    });
+            }
+
+            sendPublish = function(authResponse) {
+                console.log("entrando al api");
+//                FB.api('/me/feed', 'post',
+//                    {
+//                        message: " Eres víctima de mi adicción!!",
+//                        link: "http://www.youtube.com/watch?v=nQ5bAb3YQ6Y",
+//                        picture: "{{ $meVictim['picture']->data->url }}",
+//                        caption: "Eres víctima de mi adicción",
+//                        actions: {"name":"Ver", "link":"http://www.youtube.com/watch?v=nQ5bAb3YQ6Y"},
+//                        privacy: {"value": "ALL_FRIENDS"}
+//                    }, function(response) {
+//                        if (!response || response.error) {
+//                            console.log(response.error);
+//                          alert('Sucedió un error.');
+//                        } else {
+//                          alert('Post ID: ' + response.id);
+//                        }
+//                });
+
+                 FB.ui( {
+                    method: 'feed',
+                    name: "Mi Víctima",
+                    link: "http://www.youtube.com/watch?v=nQ5bAb3YQ6Y",
+//                    picture: "{{ $meVictim['picture']->data->url }}",
+                    caption: "Eres víctima de mi adicción",
+                    tags: "{{ $meVictim['id'] }}",
+                    actions: {"name":"Ver", "link":"http://www.youtube.com/watch?v=nQ5bAb3YQ6Y"}
+                }, function( response ) {
+                    if (response.error) {
+                        console.log("ocurrio un error");
+                        console.log(response.error);
+                      /* handle the result */
+                    }
+                } );
+
+
+            };
+        });
+
+/*
+    FB.api(
+      'me/objects/cyzone_addicted:participar',
+      'post',
+      {
+        app_id: 1483842561857563,
+        type: "cyzone_addicted:participar",
+        url: "http://samples.ogp.me/1490378904537262",
+        title: "Sample Participar",
+        image: "https://fbstatic-a.akamaihd.net/images/devsite/attachment_blank.png",
+        description: ""
+      },
+      function(response) {
+        // handle the response
+      }
+    );
+        
+ FB.ui({method: 'apprequests',
+  message: 'Take this bomb to blast your way to victory!',
+  to: {user-ids}, 
+  action_type:'send',
+  object_id: 'YOUR_OBJECT_ID'  // i.e. '191181717736427' 
+}, function(response){
+    console.log(response);
+}); 
+ */
+    </script>
+
+    
 @stop

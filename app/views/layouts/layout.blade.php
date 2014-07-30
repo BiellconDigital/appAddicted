@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:fb="http://ogp.me/ns/fb#">    
   <head>
   	<meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta charset="utf-8">
@@ -17,6 +17,9 @@
     {{ HTML::style('bower_components/bootstrap/dist/css/bootstrap.min.css'); }}
     {{ HTML::style('bower_components/bootstrap/dist/css/bootstrap.css.map'); }}
 
+    {{ HTML::style('bower_components/bootstrap-datepicker/css/datepicker.css'); }}
+
+    
     {{ HTML::style('bower_components/font-awesome/css/font-awesome.min.css'); }}
     
     {{ HTML::style('css/main.css'); }}
@@ -25,7 +28,7 @@
     	<script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.2/html5shiv.js"></script>
     	<script src="//cdnjs.cloudflare.com/ajax/libs/respond.js/1.2.0/respond.js"></script>
     <![endif]-->
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
   </head>
 
   <body>
@@ -64,6 +67,8 @@
     </div> <!-- /container -->
     {{ HTML::script('bower_components/bootstrap/dist/js/bootstrap.min.js'); }}
 
+    {{ HTML::script('bower_components/bootstrap-datepicker/js/bootstrap-datepicker.js'); }}
+    {{ HTML::script('bower_components/bootstrap-datepicker/js/locales/bootstrap-datepicker.es.js'); }}
     
   </body>
 </html>

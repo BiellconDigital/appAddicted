@@ -6,7 +6,7 @@ use Facebook\Exceptions\FacebookRequestException;
 use Facebook\FacebookRequest;
 use Facebook\Exceptions\FacebookAuthorizationException;
 
-class CategoryController extends BaseController {
+class RankingController extends BaseController {
 
 	/*
 	|--------------------------------------------------------------------------
@@ -24,10 +24,49 @@ class CategoryController extends BaseController {
 	public function index()
 	{
             
-            $categories = Category::all();
+            try {
+                FacebookSession::setDefaultApplication(Config::get('facebook')['appId'],Config::get('facebook')['secret']);
+                $token_url =    "https://graph.facebook.com/oauth/access_token?" .
+                "client_id=" . Config::get('facebook')['appId'] .
+                "&client_secret=" . Config::get('facebook')['secret'] .
+                "&grant_type=client_credentials";
+                $app_token = file_get_contents($token_url);
+                $idtoken = explode("=", $app_token)[1];
+//                $pageHelper = new FacebookJavaScriptLoginHelper(Config::get('facebook')['appId'],Config::get('facebook')['secret']);
+//                $session = $pageHelper->getSession();
+                $session = new FacebookSession($idtoken);
+
+                $participants = DB::table('user')
+                    ->join('profile', 'user.id', '=', 'profile.user_id')
+                    ->where('user.inscrito', true)
+                    ->orderBy('votes', 'desc')
+                    ->get();
+                
+                foreach ($participants as $key => $participant) {
+                    //Obtener foto de la participante
+                    $request = new FacebookRequest(
+                        $session,
+                        'GET',
+                        "/" . $participant->uid . "/picture",
+                        array (
+                            'width' => 100,
+                            'height' => 95,
+                            'redirect' => false
+                        )
+                        , 'v1.0' 
+                    );
+                    $response = $request->execute();
+                    $photoParticipant = $response->getGraphObject()->asArray();
+                    $participants[$key]->photo = $photoParticipant->url;
+                }
+
+                return View::make('ranking')
+                        ->with('participants', $participants);
             
-            return View::make('categories')
-                    ->with('categories', $categories);
+            } catch (FacebookAuthorizationException $e) {
+                return Redirect::to('/sesionexpirada')
+                        ->with('message', 'Su sesión ha expirado. Por favor haga click en reiniciar. ' . $e->getMessage());
+            }
 	}
         
         public function amigos($idCate) {
@@ -45,12 +84,6 @@ class CategoryController extends BaseController {
                 $friends = $user_friends['data'];
                 $search = Input::get('search');
                 
-                $first = DB::table('victim')->where('user_id', Auth::user()->id)->where('voted', true);
-                $victims = DB::table('victim')->where('user_id', Auth::user()->id)->where('voted', false)
-                                ->where('updated_at', ">", \Carbon\Carbon::now()->subDays(1)->toDateString())
-                                ->union($first)->get();
-
-                
                 if (Request::isMethod('post') and $search != "") {
                     //select uid, name, sex from user where uid in (SELECT uid2 FROM friend WHERE uid1 = me())and (strpos(lower(name),'Jack')>=0 OR strpos(name,'Jack')>=0)
                     foreach ($friends as $key => $friend) {
@@ -60,14 +93,6 @@ class CategoryController extends BaseController {
                         }
                         if (substr_count($friend->name, $search) <= 0) {
                             array_forget($friends, $key);
-                            continue;
-                        }
-                        
-                        foreach ($victims as $victim) {
-                            if ($victim->uid == $friend->id) {
-                                array_forget($friends, $key);
-                                continue;
-                            }
                         }
                     }
 
@@ -75,14 +100,6 @@ class CategoryController extends BaseController {
                     foreach ($friends as $key => $friend) {
                         if ($friend->gender == "female") {
                             array_forget($friends, $key);
-                            continue;
-                        }
-                        
-                        foreach ($victims as $victim) {
-                            if ($victim->uid == $friend->id) {
-                                array_forget($friends, $key);
-                                continue;
-                            }
                         }
                     }
                 }

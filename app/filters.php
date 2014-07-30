@@ -1,5 +1,4 @@
 <?php
-session_start();
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +13,7 @@ session_start();
 use Facebook\FacebookSession;
 use Facebook\Helpers\FacebookPageTabHelper;
 use Facebook\Helpers\FacebookJavaScriptLoginHelper;
+use Facebook\Exceptions\FacebookAuthorizationException;
 
 App::before(function($request)
 {
@@ -40,6 +40,22 @@ App::after(function($request, $response)
 Route::filter('auth', function()
 {
 	if (Auth::guest())
+	{
+		if (Request::ajax())
+		{
+			return Response::make('Unauthorized', 401);
+		}
+		else
+		{
+                    Redirect::to('/sesionexpirada')->with('message', 'Su sesión ha expirado. Por favor haga click en reiniciar.');
+                    //return Redirect::guest('login');
+		}
+	}
+});
+
+Route::filter('auth-participant', function()
+{
+	if (!Session::has('participant'))
 	{
 		if (Request::ajax())
 		{
@@ -95,37 +111,47 @@ Route::filter('csrf', function()
 
 Route::filter('auth-facebook', function()
 {
-    FacebookSession::setDefaultApplication(Config::get('facebook')['appId'],Config::get('facebook')['secret']);
-    
-    $pageHelper = new FacebookPageTabHelper(Config::get('facebook')['appId'],Config::get('facebook')['secret']);
-    
-    $isLiked = $pageHelper->isLiked();//https://developers.facebook.com/docs/apps/review
-    if (!$isLiked) {
-        return Redirect::to('/noliked');//->with('message', 'PRIMERO DALE ME GUSTA ');
-        //return Redirect::to('/fb/noauth')->with('url', $helper->getLoginUrl(array('email', 'user_friends')));
-        //return Redirect::to('/inscripcion')->with('url', $helper->getLoginUrl(array('email', 'user_friends')));
-    }
-    $session = $pageHelper->getSession();
+    try {
+        FacebookSession::setDefaultApplication(Config::get('facebook')['appId'],Config::get('facebook')['secret']);
 
-    if(!isset($session))
-    {
-        // Login URL if session not found
-        //return Redirect::to('/fb/noliked')->with('message', 'PARTICIPA ');
-        return Redirect::to('/noauth');//->with('message', 'No esta autorizado.');
-                //->with('url', $helper->getLoginUrl(array('email', 'user_friends')));
+        $pageHelper = new FacebookPageTabHelper(Config::get('facebook')['appId'],Config::get('facebook')['secret']);
+
+        $isLiked = $pageHelper->isLiked();//https://developers.facebook.com/docs/apps/review
+        if (!$isLiked) {
+            return Redirect::to('/noliked');//->with('message', 'PRIMERO DALE ME GUSTA ');
+            //return Redirect::to('/fb/noauth')->with('url', $helper->getLoginUrl(array('email', 'user_friends')));
+            //return Redirect::to('/inscripcion')->with('url', $helper->getLoginUrl(array('email', 'user_friends')));
+        }
+        $session = $pageHelper->getSession();
+
+        if(!isset($session))
+        {
+            // Login URL if session not found
+            //return Redirect::to('/fb/noliked')->with('message', 'PARTICIPA ');
+            return Redirect::to('/noauth');//->with('message', 'No esta autorizado.');
+                    //->with('url', $helper->getLoginUrl(array('email', 'user_friends')));
+        }
+        Session::put('uid', $pageHelper->getUserId());
+        
+    } catch (FacebookAuthorizationException $e) {
+        return Redirect::to('/sesionexpirada')->with('message', 'Su sesión ha expirado. Por favor haga click en reiniciar.');
     }
-    Session::put('uid', $pageHelper->getUserId());
 });
 
 Route::filter('auth-js-facebook', function()
 {
-    FacebookSession::setDefaultApplication(Config::get('facebook')['appId'],Config::get('facebook')['secret']);
-    $pageHelper = new FacebookJavaScriptLoginHelper();
-    
-    $session = $pageHelper->getSession();
-    if(!isset($session))
-    {
-        return Redirect::to('/noauth');//->with('message', 'No esta autorizado.');
-                //->with('url', $helper->getLoginUrl(array('email', 'user_friends')));
+    try {
+        FacebookSession::setDefaultApplication(Config::get('facebook')['appId'],Config::get('facebook')['secret']);
+        $pageHelper = new FacebookJavaScriptLoginHelper();
+
+        $session = $pageHelper->getSession();
+        if(!isset($session))
+        {
+            return Redirect::to('/noauth');//->with('message', 'No esta autorizado.');
+                    //->with('url', $helper->getLoginUrl(array('email', 'user_friends')));
+        }
+        Session::put('uid', $pageHelper->getUserId());
+    } catch (FacebookAuthorizationException $e) {
+        return Redirect::to('/sesionexpirada')->with('message', 'Su sesión ha expirado. Por favor haga click en reiniciar.');
     }
 });

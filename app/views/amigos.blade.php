@@ -2,20 +2,24 @@
 
 @section('content')
     @if(Session::has('message'))
-            <div class="alert alert-dismissable">
+            <div class="alert alert-dismissable alert-info">
               <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
               {{ Session::get('message')}}
             </div>
     @endif
+    <div class="text-center">
+        <br/>
+        <img src="{{asset('img/titulo-escoge-victimas.png')}}" />
+        <br/><br/>
+    </div>
 
-    <img src="{{asset('img/logo-thums.png')}}" />
 
     {{ Form::open(array('route' => array('categorias.friends', $idCate), 'id' => 'formVictims', "name" => "formVictims",
                     'method' => 'post', "role" => "form", "class" => "form-horizontal")) }}
         <div id="formInvitar" class="row">
-            
+            <br/>
             <div class="form-group has-feedback">
-              <label class="control-label col-xs-5 text-white" for="search">LISTA DE AMIGOS</label>
+              <label class="control-label col-xs-5 text-white" for="search"></label>
               <div class="col-xs-7">
                 <input type="text" class="form-control input-sm" id="search3" name="search">
                 <span class="glyphicon glyphicon-search form-control-feedback"></span>
@@ -28,10 +32,16 @@
                     <ul class="list-inline lista-amigos">
                       <li>{{ Form::checkbox("victims", $friend->id, false) }}</li>
                       <li><img src="{{ $friend->picture->data->url }}" class="img-rounded" width="29"/>&nbsp;&nbsp; </li>
-                      <li style="max-width: 85px;">{{ $friend->name }}</li>
+                      <li style="max-width: 115px;">{{ $friend->name }}</li>
                     </ul>     
                 </div>
                 @endforeach
+            </div>
+            
+            <div>
+                <p>
+                    <span class="text-white small">NO TE PREOCUPES QUE PUEDES REGRESAR A ACUMULAR MÁS </span><b><span class="text-black small">VÍCTIMAS</span></b>
+                </p>
             </div>
         </div>
     {{ Form::close() }}
@@ -39,19 +49,15 @@
     <div class="text-center">
         <br/>
         <a class="boton sendRequest" href="">
-            Invitar <i class=""><img src="{{asset('img/icono-enviar.png')}}" width="20" /></i>
+            Listo!  <i class=""><img src="{{asset('img/icono-enviar.png')}}" width="20" /></i>
         </a> 
     </div>
 
-    <div class="">
+    <div class="text-center">
         <br/><br/><br/>
         <a class="boton-small" href="{{route('categorias')}}">
-            Categorias <i class=""><img src="{{asset('img/icono-enviar.png')}}" width="20" /></i>
-        </a> 
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <a class="boton-small" href="{{route('ranking')}}">
-            Ranking <i class=""><img src="{{asset('img/icono-enviar.png')}}" width="20" /></i>
-        </a> 
+            Cambiar de categoría
+        </a>
     </div>
 
     
@@ -79,8 +85,11 @@
                     IsFacebookConnected = function()
                     {
                             FB.getLoginStatus(function (response) 
-                            {			
-                                    sendRequest();			
+                            {		    
+                                    if (response.authResponse) {
+                                        console.log(response);
+                                        sendRequest(response.authResponse);
+                                    }
                             });
                     }
 
@@ -97,7 +106,7 @@
 //                    }
                                     
 
-        sendRequest = function() {
+        sendRequest = function(authResponse) {
            // Get the list of selected friends
             var sendUIDs = '';
             var contador = 0;
@@ -128,7 +137,9 @@
             FB.ui({method: 'apprequests',
                 to: sendUIDs,
                 title: 'Enviar esta solicitud de tus victimas',
-                message: 'Quiero que seas mi víctima.'
+                message: 'Quiero que seas mi víctima.',
+//                data: 'friend=yes&id=' + authResponse.userID,
+                data: '{"idfrom":'+authResponse.userID+',"friend":"yes"}'
 //                action_type:'send',
 //                object_id: '1490378904537262'  // i.e. '191181717736427' 
 //                redirect_uri: 'https://www.addicted-cyzone.com/index.php/victimas/votar'//no se usa en el api js
