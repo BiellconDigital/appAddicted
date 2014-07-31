@@ -6,7 +6,8 @@
 	"require": {
 		"laravel/framework": "4.2.*",
 		"facebook/php-sdk-v4": "dev-master",
-                "artdarek/oauth-4-laravel": "dev-master"
+                "artdarek/oauth-4-laravel": "dev-master",
+                "maatwebsite/excel": "1.*"
 	},
 	"autoload": {
 		"classmap": [

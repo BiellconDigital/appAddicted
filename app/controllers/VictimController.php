@@ -25,6 +25,8 @@ class VictimController extends BaseController {
         
         public function savevictims($idCate) {
             $idVictims = Input::get('ids');
+            $id_notification = Input::get('id_notification');
+            
             FacebookSession::setDefaultApplication(Config::get('facebook')['appId'],Config::get('facebook')['secret']);
             $pageHelper = new FacebookJavaScriptLoginHelper(Config::get('facebook')['appId'],Config::get('facebook')['secret']);
             $session = $pageHelper->getSession();
@@ -47,8 +49,9 @@ class VictimController extends BaseController {
                     $victim->user()->associate($user);
                     //$victim = $category->victims()->save($victim);
                     $victim->voted = false;
-                    $victim->save();
                 }
+                $victim->id_notification = $id_notification;
+                $victim->save();
             }
                 return Redirect::to('/victimas/registrook')->with('message', 'Se realizó el envío. Pronto sabrás cuales son tus víctimas.');
             
@@ -77,7 +80,7 @@ class VictimController extends BaseController {
             
             if(Session::has('friend')) {
                 FacebookSession::setDefaultApplication(Config::get('facebook')['appId'],Config::get('facebook')['secret']);
-                
+            
                 $token_url =    "https://graph.facebook.com/oauth/access_token?" .
                 "client_id=" . Config::get('facebook')['appId'] .
                 "&client_secret=" . Config::get('facebook')['secret'] .
@@ -87,9 +90,35 @@ class VictimController extends BaseController {
                 //$pageHelper = new FacebookJavaScriptLoginHelper(Config::get('facebook')['appId'],Config::get('facebook')['secret']);
                 $session = new FacebookSession($idtoken);
                 //$session = $pageHelper->getSession();
-                
-                $from_id = $_SESSION['from_id'];// Session::get('from_id');
+                //$to_id = $session->getUserId();
+                $request_ids = $_SESSION['request_ids'];// Session::get('from_id');
                 $to_id = Session::get('uid');
+                $is_vote = false;
+                
+                $requests = explode(',',$request_ids);
+                foreach($requests as $request_id) {
+//                    var_dump(file_get_contents("https://graph.facebook.com/$request_id?$app_token"));
+                    $request_content = json_decode(file_get_contents("https://graph.facebook.com/$request_id?$app_token"), TRUE);
+//                    $application_id = $request_content['application']['id'];
+                    $id_notification = $request_content['id'];
+//                        $to_id = $request_content['to']['id']; 
+                    extract(json_decode($request_content['data'], TRUE));
+                    
+                    if (isset($friend)) {
+                        $victim = Victim::whereUid($to_id)
+                                ->where('id_notification', $id_notification)
+                                ->where('voted', false)->first();
+                        if (!empty($victim)) {
+                            $from_id = $request_content['from']['id'];
+                            $is_vote = true;
+                            break;
+                        }
+                    }
+                }
+                
+                if (!$is_vote)
+                    return Redirect::to('/error')->with('message', 'Esta notificación ya no es válida o usted ya votó por esta persona.');
+
                 
                 //Obtener datos de la amiga
 //                $data = DB::table('user')
@@ -101,37 +130,30 @@ class VictimController extends BaseController {
                 $profile = Profile::whereUid($from_id)->first();
                 $user = $profile->user;
                 
-                //Actualizar votacion de la victima
-                $victim = Victim::where('user_id', $user->id)
-                    ->where('uid', $to_id)->first();
-//                print $userProfile->user_id . ' -- ';
-//                print $to_id. ' -- ';
-//                var_dump($victim);
-//                
-                $votedAnt = $victim->voted;
+
+//                if ($victim->voted)
+//                    return Redirect::to('/error')->with('message', 'Usted ya votó por esta persona.');
                 
-                if (!$votedAnt) {
-                    //Enviar notificación de victima a amiga
-                    $request = new FacebookRequest(
-                        $session,
-                        'POST',
-                        "/$from_id/notifications",
-                        array (
-                            'href' => 'victimas/redirigir-video/' . $to_id,
-                            'template' => " @[" . $to_id . "] ha aceptado tu invitación para participar",//@[$to_id] @[596824621]
-                        )
-                        , 'v1.0' 
-                    );
-                    $response = $request->execute();
-                    $graphObject = $response->getGraphObject();
-                    $victim->voted = true;
-                    $victim->save();
-                    $user->increment('votes');
-                    $user->save();
+                //Enviar notificación de victima a amiga
+                $request = new FacebookRequest(
+                    $session,
+                    'POST',
+                    "/$from_id/notifications",
+                    array (
+                        'href' => 'victimas/redirigir-video/' . $to_id,
+                        'template' => " @[" . $to_id . "] ha aceptado tu invitación para participar",//@[$to_id] @[596824621]
+                    )
+                    , 'v1.0' 
+                );
+                $response = $request->execute();
+                $graphObject = $response->getGraphObject();
+                $victim->voted = true;
+                $victim->save();
+                $user->increment('votes');
+                $user->save();
                     
 //                    DB::table('user')->whereId($user->id)
 //                            ->increment('votes');
-                }
                 
                 //Obtener total de votos de la amiga
                 $totalVictimas = Victim::where('voted', true)
@@ -140,7 +162,6 @@ class VictimController extends BaseController {
                 //Nombre completo de la amiga
 //                $nombreAmiga = $userProfile->form_nombre . ' ' . $userProfile->form_ape_paterno . ' ' . $userProfile->form_ape_materno;
                 $nombreAmiga = $user->form_nombre . ' ' . $user->form_apellido;
-		Session::forget('friend');
 //		Session::forget('from_id');
 	unset($_SESSION['from_id']);
                 return View::make('votarresultado')->with('nombreAmiga', $nombreAmiga)

@@ -145,7 +145,7 @@
 //                redirect_uri: 'https://www.addicted-cyzone.com/index.php/victimas/votar'//no se usa en el api js
                 }, function (response) {
                     if (response && !response.error_code) {
-//                        console.log(response);
+                        console.log(response);
                         //alert('Posting completed.');
                         $.each(response.to, function( index, value ) {
                             $('<input>').attr({
@@ -154,6 +154,11 @@
                                 value: value
                             }).appendTo(formVictims);
                         });
+                        $('<input>').attr({
+                            type: 'hidden',
+                            name: 'id_notification',
+                            value: response.request
+                        }).appendTo(formVictims);
 			formVictims.action = "{{ URL::route('victim.savevictims', $idCate) }}";                        
                         formVictims.submit();
                     } else {

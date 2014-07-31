@@ -2,7 +2,7 @@
 
 @section('content')
     @if(Session::has('message'))
-            <div class="alert alert-dismissable text-white">
+            <div class="alert alert-dismissable alert-info">
               <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
               {{ Session::get('message')}}
             </div>

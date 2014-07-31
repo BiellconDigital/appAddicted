@@ -43,7 +43,7 @@ class InscripcionController extends BaseController {
                     'form_email'    => 'required|email|unique:user',//, 'unique:user,email'
                     'form_nombre' => array('required', 'min:2'),
                     'form_apellido' => array('required', 'min:2'),
-                    'form_fecha_nacimiento' => array('required', 'date'),
+                    'form_fecha_nacimiento' => array('required', 'date_format:"d/m/Y"'),
                     'form_pais' => 'required|min:3',
                     'form_acepta_term' => array('required')
                 );
@@ -53,8 +53,10 @@ class InscripcionController extends BaseController {
                 {
                     // Validation has failed.
                     //return Redirect::back()->with_input(Input::except('_token'))->with_errors($validation);
-                    return Redirect::back()->with_input(Input::all())
+                    return Redirect::to('/inscripcion/' . $id)->withInput(Input::except('_token'))
                             ->with('message', 'Ingrese todos los campos correctamente.');
+//                    return Redirect::back()->with_input(Input::except('_token', 'inscrito'))
+//                            ->with('message', 'Ingrese todos los campos correctamente.');
                 }
 
                 if (!$user->update(Input::except('_token'))) {
@@ -62,6 +64,7 @@ class InscripcionController extends BaseController {
                             ->with('message', 'Sucedió un error en la inscripción.')
                             ->withInput();
                 }
+
                 $user->form_acepta_term = true;
                 $user->save();
                 Auth::login($user);

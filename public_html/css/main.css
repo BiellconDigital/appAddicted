@@ -25,3 +25,5 @@ body{background-image:url("../img/bg.jpg");background-repeat:no-repeat;padding:0
 .boton,.boton-small{border:2px solid #fff;background-color:transparent;color:#fff;font-family:Frutiger-lt !important;font-size:1.5em;padding:.4em .6em}
 .boton-small{border:1px solid #fff;font-size:1.2em;padding:.3em .6em}
 .icono-enviar{background-image:url("../img/icono-enviar.png");background-repeat:no-repeat;color:#fff !important;display:inline;height:36px;width:40px}
+.alert-danger{font-size:1.4em !important;color:#fff !important;background-color:#c30773 !important}
+.alert-info{font-size:1.4em !important;color:#fff !important;background-color:#c30773 !important}
