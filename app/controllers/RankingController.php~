@@ -40,7 +40,6 @@ class RankingController extends BaseController {
                     ->join('profile', 'user.id', '=', 'profile.user_id')
                     ->where('user.inscrito', true)
                     ->orderBy('votes', 'desc')
-		    ->take(10)
                     ->get();
                 
                 foreach ($participants as $key => $participant) {

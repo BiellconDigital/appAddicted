@@ -15,7 +15,7 @@
     </div>
     <script type="text/javascript">
         function reiniciar() {
-            top.location.href = "https://www.facebook.com/pages/Cyzone-Tester/129158347286143?sk=app_102227703153175";// "https://www.facebook.com/studiomanda/app_102227703153175";
+            top.location.href = "https://www.facebook.com/studiomanda/app_102227703153175";
         }
     </script>
     
