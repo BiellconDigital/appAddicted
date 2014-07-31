@@ -33,7 +33,7 @@ class VictimController extends BaseController {
             $user = Auth::user();
             
             foreach ($idVictims as $idVictim) {
-                $victim = Victim::whereUid($idVictim)->first();
+                $victim = Victim::whereUid($idVictim)->where('user_id', $user->id)->first();
                 if (empty($victim)) {
                     $request = new FacebookRequest( $session, 'GET', '/' . $idVictim, null, 'v1.0' );
                     $response = $request->execute();
@@ -88,7 +88,7 @@ class VictimController extends BaseController {
                 $session = new FacebookSession($idtoken);
                 //$session = $pageHelper->getSession();
                 
-                $from_id = Session::get('from_id');
+                $from_id = $_SESSION['from_id'];// Session::get('from_id');
                 $to_id = Session::get('uid');
                 
                 //Obtener datos de la amiga
@@ -97,7 +97,7 @@ class VictimController extends BaseController {
 //                    ->where('profile.uid', $from_id)
 //                    ->get();
 //                $userProfile = $data[0];
-                
+//                print $from_id; exit();
                 $profile = Profile::whereUid($from_id)->first();
                 $user = $profile->user;
                 
@@ -140,8 +140,9 @@ class VictimController extends BaseController {
                 //Nombre completo de la amiga
 //                $nombreAmiga = $userProfile->form_nombre . ' ' . $userProfile->form_ape_paterno . ' ' . $userProfile->form_ape_materno;
                 $nombreAmiga = $user->form_nombre . ' ' . $user->form_apellido;
-
-
+		Session::forget('friend');
+//		Session::forget('from_id');
+	unset($_SESSION['from_id']);
                 return View::make('votarresultado')->with('nombreAmiga', $nombreAmiga)
                     ->with('totalVictimas', $totalVictimas);
             } else {

@@ -34,6 +34,11 @@ Route::get('error', function()
      return View::make('error');
 });
 
+Route::get('login', function()
+{
+     echo "hacer login";
+});
+
 Route::any('login/fb/callback', array('uses' => 'LoginController@fbCallback'));
 
 Route::get('logout', function() {
@@ -44,10 +49,13 @@ Route::get('logout', function() {
 //Route::get('/inscripcion', array('uses' => 'InscripcionController@form'));
 Route::get('inscripcion/{id}', array('as'  => 'inscripcion', 
     'uses' => 'InscripcionController@form'));//'before' => 'auth-js-facebook', 
+
 Route::post('inscripcion/update/{id}', array('as'  => 'inscripcion.update', 
     'before' => 'auth-js-facebook|csrf', 'uses' => 'InscripcionController@update'))->where('id', '[0-9]+');
-Route::get('categorias', array('as'  => 'categorias', 
-    'before' => 'auth', 'uses' => 'CategoryController@index'));//auth-js-facebook|
+
+Route::any('categorias', array('as'  => 'categorias', 
+    'before' => 'auth', 'uses' => 'CategoryController@index'));
+
 Route::any('categorias/amigos/{idCate}', array('as'  => 'categorias.friends',
     'before' => 'auth', 'uses' => 'CategoryController@amigos'));//auth-facebook|
 
@@ -57,9 +65,25 @@ Route::post('victimas/registrarvictimas/{idCate}', array('as'  => 'victim.savevi
 Route::any('victimas/votar', array('as'  => 'victim.votar', 
     'uses' => 'VictimController@votar'));//auth-facebook|
 
+Route::get('victimas/registrook', function() {
+    return View::make('registrook');//->with('message', "Sólo pueden concursar chicas!");
+});
+
 Route::get('nopermitdo', function() {
     return View::make('nopermitido')->with('message', "Sólo pueden concursar chicas!");
 });
 
 Route::get('ranking', array('as'  => 'ranking', 
     'uses' => 'RankingController@index'));//auth-js-facebook|
+
+Route::get('video/{uid}/{userid}', array('as'  => 'video',
+    'uses' => 'VideoController@index'));//auth-js-facebook|
+
+
+Route::get('sesionexpirada', function() {
+    return View::make('sesionexpirada');//->with('message', "Sólo pueden concursar chicas!");
+});
+
+Route::post('victimas/redirigir-video/{idvictim}', array('as'  => 'victimas.redirigirvideo', 
+    'uses' => 'VictimController@redirigirVideo'));//auth-js-facebook|
+

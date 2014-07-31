@@ -63,7 +63,7 @@ Route::post('victimas/registrarvictimas/{idCate}', array('as'  => 'victim.savevi
     'before' => 'auth', 'uses' => 'VictimController@savevictims'));//auth-facebook|
 
 Route::any('victimas/votar', array('as'  => 'victim.votar', 
-    'uses' => 'VictimController@votar'));//auth-facebook|
+    'before' => 'auth-js-facebook', 'uses' => 'VictimController@votar'));//auth-facebook|
 
 Route::get('victimas/registrook', function() {
     return View::make('registrook');//->with('message', "Sólo pueden concursar chicas!");
