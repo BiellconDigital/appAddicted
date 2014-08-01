@@ -53,7 +53,7 @@ class HomeController extends BaseController {
 //                    $userProfile = $data[0];
 //                    
 //                    Session::put('from_id', $userProfile->uid);
-                    return Redirect::route('victim.votar');
+                    return Redirect::route('victim.votar', array('uid' => $uid));
                 }
                 
 //                if (empty($profile)) {
@@ -68,8 +68,10 @@ class HomeController extends BaseController {
         public function invite() {
             if( isset($_REQUEST['request_ids']) ) {
                 try {
-                    $_SESSION['request_ids'] = $_REQUEST['request_ids'];
+                    //$_SESSION['request_ids'] = $_REQUEST['request_ids'];
                     Session::put('friend', 'yes');
+                    Session::put('request_ids', $_REQUEST['request_ids']);
+                    
                     return View::make('invite');
 //exit();
                 } catch (\Exception $e) {

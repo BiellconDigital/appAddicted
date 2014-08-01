@@ -24,7 +24,7 @@
 
     <script type="text/javascript">
         function salir() {
-            top.location.href = "https://www.facebook.com/studiomanda";
+            top.location.href = "https://www.facebook.com/pages/Cyzone-Tester/129158347286143?sk=timeline";
         }
     </script>
         

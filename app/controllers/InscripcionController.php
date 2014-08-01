@@ -43,7 +43,7 @@ class InscripcionController extends BaseController {
                     'form_email'    => 'required|email|unique:user',//, 'unique:user,email'
                     'form_nombre' => array('required', 'min:2'),
                     'form_apellido' => array('required', 'min:2'),
-                    'form_fecha_nacimiento' => array('required', 'date_format:"d/m/Y"'),
+                    'form_fecha_nacimiento' => array('required', 'date_format:"d-m-Y"'),
                     'form_pais' => 'required|min:3',
                     'form_acepta_term' => array('required')
                 );
@@ -66,6 +66,7 @@ class InscripcionController extends BaseController {
                 }
 
                 $user->form_acepta_term = true;
+                $user->form_fecha_nacimiento = date('Y-m-d', strtotime(Input::get('form_fecha_nacimiento'))) ;
                 $user->save();
                 Auth::login($user);
 

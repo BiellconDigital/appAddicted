@@ -1,20 +1,21 @@
 @extends('layouts/layout')
 
 @section('content')
-    <br/><br/><br/>
-    <br/><br/><br/>
-    @if(Session::has('message'))
-        <div class="text-center h3 text-white row">
-            <div class="col-xs-10 col-xs-offset-1">
-                {{ Session::get('message')}}
+    <br/><br/><br/><br/><br/>
+        <div id="formInvitar" class="row">
+            <br/><br/><br/><br/>
+            <div class="col-xs-12 text-center" style="font-size: 35px;">
+                <span class="text-white">SE REALIZÓ EL ENVÍO</span><br/>
+                    <span class="text-black">PRONTO SABRAS<br/>CUALES SON</span><br/>
+                    <span class="text-black"><b style="font-size: 45px;">TUS VÍCTIMAS</b></span>
             </div>
         </div>
-    @endif
+
     
     <div class="text-center">
-        <br/><br/><br/>
+        <br/><br/>
         <a class="boton" href="{{route('categorias')}}">
-            Listo!
+            Listo <i class=""><img src="{{asset('img/icono-enviar.png')}}" width="30" /></i>
         </a> 
     </div>
 

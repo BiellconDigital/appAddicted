@@ -55,7 +55,7 @@
         jQuery(document).ready(function()
         {
             $('.input-group.date').datepicker({
-                format: "dd/mm/yyyy",
+                format: "dd-mm-yyyy",
                 startView: 2,
                 language: "es",
                 autoclose: true

@@ -62,7 +62,7 @@ Route::any('categorias/amigos/{idCate}', array('as'  => 'categorias.friends',
 Route::post('victimas/registrarvictimas/{idCate}', array('as'  => 'victim.savevictims', 
     'before' => 'auth', 'uses' => 'VictimController@savevictims'));//auth-facebook|
 
-Route::any('victimas/votar', array('as'  => 'victim.votar', 
+Route::any('victimas/votar/{uid}', array('as'  => 'victim.votar', 
     'uses' => 'VictimController@votar'));//auth-facebook|
 
 Route::get('victimas/registrook', function() {
@@ -87,3 +87,7 @@ Route::get('sesionexpirada', function() {
 Route::post('victimas/redirigir-video/{idvictim}', array('as'  => 'victimas.redirigirvideo', 
     'uses' => 'VictimController@redirigirVideo'));//auth-js-facebook|
 
+Route::get('reportes', array('as'  => 'reportes', 
+    'uses' => 'ReporteController@index'));
+Route::post('reportes/data-participantes', array('as'  => 'reportes.participantes', 
+    'uses' => 'ReporteController@participantes'));

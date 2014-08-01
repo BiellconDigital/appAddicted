@@ -20,14 +20,14 @@
         <div class="col-xs-9">
             <iframe width="100%" height="300" src="//www.youtube.com/embed/nQ5bAb3YQ6Y" frameborder="0" allowfullscreen></iframe>
         </div>
-        <div class="col-xs-3" style="height: 300px;margin-top: 190px;">
+        <div class="col-xs-3" style="height: 300px;padding-top: 110px;">
             <img src="{{ $meVictim['picture']->data->url }}" class="img-responsive"/>
         </div>
     </div>
     <br/>
-    <div class="text-right row">
+    <div class="text-center row">
         <div class="col-xs-5 col-xs-offset-4">
-            <fb:like href="http://www.youtube.com/embed/nQ5bAb3YQ6Y" layout="button_count" action="like" show_faces="false" share="true"></fb:like>
+            <fb:share-button href="http://www.youtube.com/embed/nQ5bAb3YQ6Y"></fb:share-button>
         </div>
     </div>
         
@@ -35,11 +35,11 @@
     <div class="text-center">
         <br/><br/><br/>
         <a class="boton-small" href="{{route('categorias')}}">
-            Reportar más victimas
+            Reportar más victimas <i class=""><img src="{{asset('img/icono-enviar.png')}}" width="30" /></i>
         </a> 
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <a class="boton-small" href="{{route('ranking')}}">
-            Mira el Ranking
+            Mira el Ranking <i class=""><img src="{{asset('img/icono-enviar.png')}}" width="30" /></i>
         </a> 
     </div>
 

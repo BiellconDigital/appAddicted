@@ -76,7 +76,7 @@ class VictimController extends BaseController {
             
         }
 
-        public function votar() {
+        public function votar($uid) {
             
             if(Session::has('friend')) {
                 FacebookSession::setDefaultApplication(Config::get('facebook')['appId'],Config::get('facebook')['secret']);
@@ -90,10 +90,12 @@ class VictimController extends BaseController {
                 //$pageHelper = new FacebookJavaScriptLoginHelper(Config::get('facebook')['appId'],Config::get('facebook')['secret']);
                 $session = new FacebookSession($idtoken);
                 //$session = $pageHelper->getSession();
-                //$to_id = $session->getUserId();
-                $request_ids = $_SESSION['request_ids'];// Session::get('from_id');
-                $to_id = Session::get('uid');
+                //$uid = $session->getUserId();
+                $request_ids = Session::get('request_ids');// $_SESSION['request_ids'];
+                //print " request_ids: ". $request_ids;
+//                $uid = Session::get('uid');
                 $is_vote = false;
+//                print " Uid del amigo: ". $uid;
                 
                 $requests = explode(',',$request_ids);
                 foreach($requests as $request_id) {
@@ -101,21 +103,24 @@ class VictimController extends BaseController {
                     $request_content = json_decode(file_get_contents("https://graph.facebook.com/$request_id?$app_token"), TRUE);
 //                    $application_id = $request_content['application']['id'];
                     $id_notification = $request_content['id'];
-//                        $to_id = $request_content['to']['id']; 
+//                        $uid = $request_content['to']['id']; 
                     extract(json_decode($request_content['data'], TRUE));
                     
-                    if (isset($friend)) {
-                        $victim = Victim::whereUid($to_id)
+//                    if (isset($friend)) {
+//                        print " id_notification: ". $id_notification;
+                        $victim = Victim::whereUid($uid)
                                 ->where('id_notification', $id_notification)
                                 ->where('voted', false)->first();
                         if (!empty($victim)) {
                             $from_id = $request_content['from']['id'];
                             $is_vote = true;
+//                            print " from id: ". $from_id;
+
                             break;
                         }
-                    }
+//                    }
                 }
-                
+//                exit();
                 if (!$is_vote)
                     return Redirect::to('/error')->with('message', 'Esta notificación ya no es válida o usted ya votó por esta persona.');
 
@@ -140,8 +145,8 @@ class VictimController extends BaseController {
                     'POST',
                     "/$from_id/notifications",
                     array (
-                        'href' => 'victimas/redirigir-video/' . $to_id,
-                        'template' => " @[" . $to_id . "] ha aceptado tu invitación para participar",//@[$to_id] @[596824621]
+                        'href' => 'victimas/redirigir-video/' . $uid,
+                        'template' => " @[" . $uid . "] ha aceptado tu invitación para participar",//@[$uid] @[596824621]
                     )
                     , 'v1.0' 
                 );
@@ -162,8 +167,9 @@ class VictimController extends BaseController {
                 //Nombre completo de la amiga
 //                $nombreAmiga = $userProfile->form_nombre . ' ' . $userProfile->form_ape_paterno . ' ' . $userProfile->form_ape_materno;
                 $nombreAmiga = $user->form_nombre . ' ' . $user->form_apellido;
-//		Session::forget('from_id');
-	unset($_SESSION['from_id']);
+		Session::forget('request_ids');
+		Session::forget('friend');
+//                unset($_SESSION['from_id']);
                 return View::make('votarresultado')->with('nombreAmiga', $nombreAmiga)
                     ->with('totalVictimas', $totalVictimas);
             } else {

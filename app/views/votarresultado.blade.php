@@ -9,11 +9,11 @@
 	@endif
         <br/><br/><br/><br/><br/>
         <div id="formInvitar" class="row font-frutiger">
-            <div class="text-center text-white col-xs-10 col-xs-offset-1" style="font-size: 1.8em;">
+            <div class="text-center text-white col-xs-10 col-xs-offset-1" style="font-size: 1.9em;">
                 <br/><br/>
-                HOLA!
+                <b style="font-size: 2em; font-weight: 900;">HOLA!</b>
                 <p class="text-black">
-                    <b>HAS SIDO VÍCTIMA DEL PODER DE ADDICCIÓN DE {{ $nombreAmiga }}</b>
+                    HAS SIDO <b>VÍCTIMA</b> DEL PODER DE <b>ADICCIÓN</b> DE {{ $nombreAmiga }}
                 </p>
                 <p>
                    CONTIGO YA SON {{ $totalVictimas }}.
@@ -22,7 +22,7 @@
         </div>
         <br/><br/>
         <p class="text-center text-white">
-            <a class="boton salir" href="" onclick="salir()">Chau! ;)</a>
+            <a class="boton salir" href="" onclick="salir()">Chau! ;) <i class=""><img src="{{asset('img/icono-enviar.png')}}" width="30" /></i></a>
         </p>
 
     <script type="text/javascript">

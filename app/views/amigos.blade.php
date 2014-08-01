@@ -48,15 +48,15 @@
 
     <div class="text-center">
         <br/>
-        <a class="boton sendRequest" href="">
+        <a class="boton-small sendRequest" href="">
             Listo!  <i class=""><img src="{{asset('img/icono-enviar.png')}}" width="20" /></i>
         </a> 
     </div>
 
     <div class="text-center">
         <br/><br/><br/>
-        <a class="boton-small" href="{{route('categorias')}}">
-            Cambiar de categoría
+        <a class="boton" href="{{route('categorias')}}">
+            Regresa <i class=""><img src="{{asset('img/icono-enviar.png')}}" width="20" /></i>
         </a>
     </div>
 

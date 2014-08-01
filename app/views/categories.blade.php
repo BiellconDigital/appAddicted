@@ -10,7 +10,12 @@
     <div class="text-center">
         <br/><br/>
         <img src="{{asset('img/titulo-categorias.png')}}"/>
-        <br/><br/><br/><br/><br/><br/>
+    </div>
+
+    <div class="text-center">
+        <br/>
+        <h2 class="font-frutiger text-white">¿Quiénes serán tus víctimas hoy?</h2>
+        <br/><br/>
     </div>
     
     <div class="row" style="width: 88%;margin: auto;">
@@ -25,12 +30,5 @@
         
     </div>
     
-    <div class="text-center">
-        <br/><br/><br/>
-        <a class="boton-small" href="{{route('ranking')}}">
-            Mira el Ranking
-        </a> 
-    </div>
-
     
 @stop

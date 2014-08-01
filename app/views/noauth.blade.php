@@ -64,7 +64,7 @@
                                                  console.log(response);
                                                 if (response && !response.error_code) {
                                                     if (response.gender === 'male') {
-                                                        window.location = "https://www.addicted-cyzone.com/index.php/victimas/votar";
+                                                        window.location = "https://www.addicted-cyzone.com/index.php/victimas/votar/" + response.id;
                                                     } else {
                                                         console.log('redirigiendo callback....');
                                                         window.location = "https://www.addicted-cyzone.com/index.php/login/fb/callback";
