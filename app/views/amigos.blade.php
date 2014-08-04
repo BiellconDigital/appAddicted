@@ -61,11 +61,10 @@
     </div>
 
     
-    <script type="text/javascript">
+<script type="text/javascript">
 
-            jQuery(document).ready(function()
-            {
-                    console.log("entrado...");
+    jQuery(document).ready(function()
+    {
                     jQuery(".sendRequest").bind("click",function(e)
                     {
                             e.preventDefault();
@@ -167,53 +166,8 @@
                 }
             );
         }
+    });
 
-
-//                    login = function()
-//                    {
-//                            FB.login(function (response)
-//                            {
-//                                    if (response.authResponse)
-//                                    {
-//                                             FB.api('/me', function(response)
-//                                             {
-//						console.log('redirigiendo callback....');
-//                                                    window.location = "https://www.addicted-cyzone.com/index.php/login/fb/callback";
-//                                             });
-//                                    } else {
-//				    	console.log('User cancelled login or did not fully authorize.');
-//				    }
-//
-//                            }, { scope: 'email, user_friends' });
-//                    }
-            });
-
-/*
-    FB.api(
-      'me/objects/cyzone_addicted:participar',
-      'post',
-      {
-        app_id: 1483842561857563,
-        type: "cyzone_addicted:participar",
-        url: "http://samples.ogp.me/1490378904537262",
-        title: "Sample Participar",
-        image: "https://fbstatic-a.akamaihd.net/images/devsite/attachment_blank.png",
-        description: ""
-      },
-      function(response) {
-        // handle the response
-      }
-    );
-        
- FB.ui({method: 'apprequests',
-  message: 'Take this bomb to blast your way to victory!',
-  to: {user-ids}, 
-  action_type:'send',
-  object_id: 'YOUR_OBJECT_ID'  // i.e. '191181717736427' 
-}, function(response){
-    console.log(response);
-}); 
- */
-    </script>
+</script>
 
 @stop    

@@ -23,11 +23,14 @@ class CategoryController extends BaseController {
 
 	public function index()
 	{
-            
-            $categories = Category::all();
-            
-            return View::make('categories')
-                    ->with('categories', $categories);
+            try {
+                $categories = Category::all();
+
+                return View::make('categories')
+                        ->with('categories', $categories);
+            } catch (\Exception $e) {
+                return Redirect::to('/error')->with('message', 'Ha ocurrido un error.');
+            }
 	}
         
         public function amigos($idCate) {
@@ -94,6 +97,8 @@ class CategoryController extends BaseController {
                         ->with('idCate', $idCate);
             } catch (FacebookAuthorizationException $e) {
                 return Redirect::to('/sesionexpirada')->with('message', 'Su sesión ha expirado. Por favor haga click en reiniciar.');
+            } catch (\Exception $e) {
+                return Redirect::to('/error')->with('message', 'Ha ocurrido un error.');
             }
         }
 

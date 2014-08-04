@@ -15,7 +15,8 @@ Route::get('/', function()
 */
 Route::model('user', 'User');
 
-Route::post('/', array('before' => 'auth-facebook', 'uses' => 'HomeController@home'));
+Route::post('/', array('as'  => 'home',
+    'before' => 'auth-facebook', 'uses' => 'HomeController@home'));
 Route::get('/', array('uses' => 'HomeController@invite'));
 //Route::post('/', array('uses' => 'HomeController@home'));
 
@@ -39,7 +40,7 @@ Route::get('login', function()
      echo "hacer login";
 });
 
-Route::any('login/fb/callback', array('uses' => 'LoginController@fbCallback'));
+Route::any('login/fb/callback', array('as'  => 'login.callback', 'uses' => 'LoginController@fbCallback'));
 
 Route::get('logout', function() {
     Auth::logout();
@@ -62,7 +63,7 @@ Route::any('categorias/amigos/{idCate}', array('as'  => 'categorias.friends',
 Route::post('victimas/registrarvictimas/{idCate}', array('as'  => 'victim.savevictims', 
     'before' => 'auth', 'uses' => 'VictimController@savevictims'));//auth-facebook|
 
-Route::any('victimas/votar/{uid}', array('as'  => 'victim.votar', 
+Route::any('victimas/votar/{uid}/{notids}', array('as'  => 'victim.votar', 
     'uses' => 'VictimController@votar'));//auth-facebook|
 
 Route::get('victimas/registrook', function() {
@@ -82,6 +83,10 @@ Route::get('video/{uid}/{userid}', array('as'  => 'video',
 
 Route::get('sesionexpirada', function() {
     return View::make('sesionexpirada');//->with('message', "Sólo pueden concursar chicas!");
+});
+
+Route::get('salir', function() {
+    return View::make('salir');//->with('message', "Sólo pueden concursar chicas!");
 });
 
 Route::post('victimas/redirigir-video/{idvictim}', array('as'  => 'victimas.redirigirvideo', 

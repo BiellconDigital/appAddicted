@@ -116,9 +116,19 @@ Route::filter('auth-facebook', function()
 
         $pageHelper = new FacebookPageTabHelper(Config::get('facebook')['appId'],Config::get('facebook')['secret']);
 
+        $signed_request = $_REQUEST['signed_request'];
+        $data_signed_request = explode('.',$signed_request); // Get the part of the signed_request we need.
+        $jsonData = base64_decode($data_signed_request['1']); // Base64 Decode signed_request making it JSON.
+        $objData = json_decode($jsonData,true); // Split the JSON into arrays.
+        if (isset($objData['app_data'])) {
+            $sourceData = $objData['app_data']; // yay you got the damn data in an string, slow c
+            Session::put('app_data', $sourceData);
+    //        setcookie("app_data", $sourceData, time()+1500);
+        }
+
         $isLiked = $pageHelper->isLiked();//https://developers.facebook.com/docs/apps/review
         if (!$isLiked) {
-            return Redirect::to('/noliked');//->with('message', 'PRIMERO DALE ME GUSTA ');
+            return View::make('noliked');//->with('message', 'PRIMERO DALE ME GUSTA ');
             //return Redirect::to('/fb/noauth')->with('url', $helper->getLoginUrl(array('email', 'user_friends')));
             //return Redirect::to('/inscripcion')->with('url', $helper->getLoginUrl(array('email', 'user_friends')));
         }
@@ -126,12 +136,13 @@ Route::filter('auth-facebook', function()
 
         if(!isset($session))
         {
-            // Login URL if session not found
-            //return Redirect::to('/fb/noliked')->with('message', 'PARTICIPA ');
-            return Redirect::to('/noauth');//->with('message', 'No esta autorizado.');
-                    //->with('url', $helper->getLoginUrl(array('email', 'user_friends')));
+            if (isset($objData['app_data']))
+                return View::make('noauth')->with('app_data', $sourceData);//->with('message', 'No esta autorizado.');
+            else 
+                return View::make('noauth')->with('app_data', "");
         }
         Session::put('uid', $pageHelper->getUserId());
+//        Session::put('app_data', $session->getSignedRequestProperty('app_data'));
         
     } catch (FacebookAuthorizationException $e) {
         return Redirect::to('/sesionexpirada')->with('message', 'Su sesión ha expirado. Por favor haga click en reiniciar.');

@@ -67,6 +67,8 @@ class RankingController extends BaseController {
             } catch (FacebookAuthorizationException $e) {
                 return Redirect::to('/sesionexpirada')
                         ->with('message', 'Su sesión ha expirado. Por favor haga click en reiniciar. ' . $e->getMessage());
+            } catch (\Exception $e) {
+                return Redirect::to('/error')->with('message', 'Ha ocurrido un error.');
             }
 	}
         
@@ -112,6 +114,8 @@ class RankingController extends BaseController {
                         ->with('idCate', $idCate);
             } catch (FacebookAuthorizationException $e) {
                 return Redirect::to('/sesionexpirada')->with('message', 'Su sesión ha expirado. Por favor haga click en reiniciar.');
+            } catch (\Exception $e) {
+                return Redirect::to('/error')->with('message', 'Ha ocurrido un error.');
             }
         }
 

@@ -20,7 +20,7 @@
         <div class="col-xs-9">
             <iframe width="100%" height="300" src="//www.youtube.com/embed/nQ5bAb3YQ6Y" frameborder="0" allowfullscreen></iframe>
         </div>
-        <div class="col-xs-3" style="height: 300px;padding-top: 110px;">
+        <div class="col-xs-3" style="height: 300px;padding-top: 107px;">
             <img src="{{ $meVictim['picture']->data->url }}" class="img-responsive"/>
         </div>
     </div>

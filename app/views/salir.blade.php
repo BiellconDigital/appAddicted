@@ -9,13 +9,13 @@
         
     <div class="text-center">
         <br/><br/><br/><br/>
-        <a class="boton sendRequest" href="" onclick="reiniciar()">
-            Reiniciar <i class=""><img src="{{asset('img/icono-enviar.png')}}" width="20" /></i>
+        <a class="boton sendRequest" href="" onclick="salir()">
+            Chau! :) <i class=""><img src="{{asset('img/icono-enviar.png')}}" width="20" /></i>
         </a> 
     </div>
     <script type="text/javascript">
-        function reiniciar() {
-            top.location.href = url_face_tab_app;
+        function salir() {
+            top.location.href = url_face_page;
         }
     </script>
     

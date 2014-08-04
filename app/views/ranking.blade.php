@@ -19,22 +19,22 @@
         <div id="formInvitar" class="row">
             
             <div class="col-xs-12 text-center text-white">
-                <h4>LAS MÁS ADICTIVAS</h4><br/>
+                <h4 style="padding: 0;margin: 0;">LAS MÁS ADICTIVAS</h4><br/>
             </div>
             
             <div class="panel-amigos col-xs-12 text-white">
                 @foreach($participants as $key => $participant)
                 <div class="col-xs-12 item-amigos">
-                    <ul class="lista-amigos" style="list-style:none;">
+                    <ul class="lista-amigos" style="list-style:none;padding: 0;">
                       <li class="row">
                           <div class="col-xs-2">
                             <img src="{{ $participant->photo }}" class="img-responsive"/>
                           </div>
-                          <div class="col-xs-6">
+                          <div class="col-xs-7 h5" style="line-height: 17px;">
                               {{ $participant->form_nombre }} {{ $participant->form_apellido }}
                           </div>
-                          <div class="col-xs-4">
-                                <span class="text-black h4"><b>{{ $participant->votes }} víctimas</b></span>
+                          <div class="col-xs-3 h5" style="line-height: 17px;">
+                                <span class="text-black"><b>{{ $participant->votes }} víctimas</b></span>
                           </div>
                       </li>
                     </ul>     
@@ -49,7 +49,7 @@
     </div>
 
     <div class="text-center">
-        <br/><br/><br/>
+        <br/><br/>
         <a class="boton-small" href="{{route('categorias')}}">
             Reportar más víctimas <i class=""><img src="{{asset('img/icono-enviar.png')}}" width="30" /></i>
         </a> 

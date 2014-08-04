@@ -1,9 +1,4 @@
 <?php
-use Facebook\FacebookSession;
-use Facebook\Helpers\FacebookJavaScriptLoginHelper;
-use Facebook\FacebookRequest;
-use Facebook\Exceptions\FacebookAuthorizationException;
-
 class ReporteController extends BaseController {
 
 	/*

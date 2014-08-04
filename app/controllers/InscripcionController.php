@@ -17,6 +17,7 @@ class InscripcionController extends BaseController {
 
 	public function form($id)
 	{
+            try {
              $user = User::find($id);
 	     $paises = array(
 		"Colombia" => "Colombia",
@@ -34,6 +35,9 @@ class InscripcionController extends BaseController {
 		);
 		return View::make('inscripcion', array('user' => $user, 'paises' => $paises));
 //                        ->with('user', $user);
+            } catch (\Exception $e) {
+                return Redirect::to('/error')->with('message', 'Ha ocurrido un error.');
+            }
 	}
         
         public function update($id) {
@@ -73,6 +77,8 @@ class InscripcionController extends BaseController {
                 return Redirect::route('categorias');
             } catch (FacebookAuthorizationException $e) {
                 return Redirect::to('/sesionexpirada')->with('message', 'Su sesión ha expirado. Por favor haga click en reiniciar.');
+            } catch (\Exception $e) {
+                return Redirect::to('/error')->with('message', 'Ha ocurrido un error.');
             }
         }
 

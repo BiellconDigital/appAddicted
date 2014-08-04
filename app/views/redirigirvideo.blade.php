@@ -8,6 +8,6 @@
 		</div>
 	@endif
     <script type="text/javascript">
-        top.location.href = "https://www.facebook.com/pages/Cyzone-Tester/129158347286143?sk=app_102227703153175";
+        top.location.href = url_face_tab_app;
     </script>
 @stop

@@ -37,10 +37,10 @@
                     iniciar = function()
                     {
                         console.log('iniciando..');
-                            FB.getLoginStatus(function (response) 
-                            {				
-                                            IsFacebookConnected();				
-                            });
+                        FB.getLoginStatus(function (response) 
+                        {				
+                                        IsFacebookConnected();				
+                        });
                     }
 
                     IsFacebookConnected = function()
@@ -64,10 +64,9 @@
                                                  console.log(response);
                                                 if (response && !response.error_code) {
                                                     if (response.gender === 'male') {
-                                                        window.location = "https://www.addicted-cyzone.com/index.php/victimas/votar/" + response.id;
+                                                        window.location = "https://www.addicted-cyzone.com/index.php/victimas/votar/" + response.id + "/" + "{{ $app_data }}";
                                                     } else {
-                                                        console.log('redirigiendo callback....');
-                                                        window.location = "https://www.addicted-cyzone.com/index.php/login/fb/callback";
+                                                        window.location = "{{ URL::route('login.callback') }}";
                                                     }
                                                 } else {
                                                     console.log('no se autorizo...');
@@ -83,7 +82,7 @@
                 @if(Session::has('friend'))
                     setTimeout(function() {
                         iniciar();
-                    }, 2500);
+                    }, 3700);
                 @endif
                     
             });

@@ -80,6 +80,8 @@ class LoginController extends BaseController {
                 //return Redirect::to('/')->with('message', 'Logged in with Facebook');
             } catch (FacebookAuthorizationException $e) {
                 return Redirect::to('/sesionexpirada')->with('message', 'Su sesión ha expirado. Por favor haga click en reiniciar.');
+            } catch (\Exception $e) {
+                return Redirect::to('/error')->with('message', 'Ha ocurrido un error.');
             }
 	}
 

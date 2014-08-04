@@ -34,6 +34,8 @@
   <body>
     <div id="fb-root"></div>
 <script type="text/javascript">
+    var url_face_page = "https://www.facebook.com/pages/Cyzone-Tester/129158347286143?sk=timeline"; 
+    var url_face_tab_app = "https://www.facebook.com/pages/Cyzone-Tester/129158347286143?v=app_102227703153175"; 
         window.fbAsyncInit = function () 
         {
             FB.init({

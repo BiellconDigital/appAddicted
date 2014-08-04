@@ -53,7 +53,7 @@ class HomeController extends BaseController {
 //                    $userProfile = $data[0];
 //                    
 //                    Session::put('from_id', $userProfile->uid);
-                    return Redirect::route('victim.votar', array('uid' => $uid));
+                    return Redirect::route('victim.votar', array('uid' => $uid, 'notids'  => Session::get('app_data')));
                 }
                 
 //                if (empty($profile)) {
@@ -66,20 +66,24 @@ class HomeController extends BaseController {
 	}
 
         public function invite() {
-            if( isset($_REQUEST['request_ids']) ) {
-                try {
-                    //$_SESSION['request_ids'] = $_REQUEST['request_ids'];
-                    Session::put('friend', 'yes');
-                    Session::put('request_ids', $_REQUEST['request_ids']);
-                    
-                    return View::make('invite');
-//exit();
-                } catch (\Exception $e) {
-                    return Redirect::to('/error')->with('message', 'Ha ocurrido un error o es un acceso incorrecto a la aplicación. ' .$e->getMessage());
-                }
+            try {
+                if( isset($_REQUEST['request_ids']) ) {
+                    try {
+//                        $_SESSION['friend'] = 'yes';
+//                        $_SESSION['request_ids'] = $_REQUEST['request_ids'];
+//                        Session::put('friend', 'yes');
+//                        Session::put('request_ids', $_REQUEST['request_ids']);
 
-            } else {
-                return Redirect::to('/error')->with('message', 'Es un acceso inválido a la aplicación.');
+                        return View::make('invite')->with('request_ids', $_REQUEST['request_ids']);
+                    } catch (\Exception $e) {
+                        return Redirect::to('/error')->with('message', 'Ha ocurrido un error o es un acceso incorrecto a la aplicación. ');
+                    }
+
+                } else {
+                    return Redirect::to('/error')->with('message', 'Es un acceso inválido a la aplicación.');
+                }
+            } catch (\Exception $e) {
+                return Redirect::to('/error')->with('message', 'Ha ocurrido un error.');
             }
         }
 }
