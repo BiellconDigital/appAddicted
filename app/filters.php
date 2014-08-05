@@ -137,9 +137,9 @@ Route::filter('auth-facebook', function()
         if(!isset($session))
         {
             if (isset($objData['app_data']))
-                return View::make('noauth')->with('app_data', $sourceData);//->with('message', 'No esta autorizado.');
+                return View::make('noauth')->with('app_data', $sourceData);
             else 
-                return View::make('noauth')->with('app_data', "");
+                return View::make('noauth')->with('app_data', "0");
         }
         Session::put('uid', $pageHelper->getUserId());
 //        Session::put('app_data', $session->getSignedRequestProperty('app_data'));
@@ -158,7 +158,7 @@ Route::filter('auth-js-facebook', function()
         $session = $pageHelper->getSession();
         if(!isset($session))
         {
-            return Redirect::to('/noauth');//->with('message', 'No esta autorizado.');
+            return Redirect::to('/noauth')->with('app_data', "0");//->with('message', 'No esta autorizado.');
                     //->with('url', $helper->getLoginUrl(array('email', 'user_friends')));
         }
         Session::put('uid', $pageHelper->getUserId());

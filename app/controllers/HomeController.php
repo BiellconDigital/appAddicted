@@ -57,7 +57,7 @@ class HomeController extends BaseController {
                 }
                 
 //                if (empty($profile)) {
-                return Redirect::to('/noauth')->with('message', 'No está registrado para participar.');
+                return Redirect::to('/noauth')->with('message', 'No está registrado para participar.')->with('app_data', '0');
 //                }            
 //                return View::make('home');
             } catch (\Exception $e) {
@@ -71,7 +71,7 @@ class HomeController extends BaseController {
                     try {
 //                        $_SESSION['friend'] = 'yes';
 //                        $_SESSION['request_ids'] = $_REQUEST['request_ids'];
-//                        Session::put('friend', 'yes');
+                        Session::put('friend', 'yes');
 //                        Session::put('request_ids', $_REQUEST['request_ids']);
 
                         return View::make('invite')->with('request_ids', $_REQUEST['request_ids']);

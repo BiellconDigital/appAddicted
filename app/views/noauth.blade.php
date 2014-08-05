@@ -64,7 +64,12 @@
                                                  console.log(response);
                                                 if (response && !response.error_code) {
                                                     if (response.gender === 'male') {
+	@if(isset($app_data))
                                                         window.location = "https://www.addicted-cyzone.com/index.php/victimas/votar/" + response.id + "/" + "{{ $app_data }}";
+	@else
+                                                        window.location = "https://www.addicted-cyzone.com/index.php/victimas/votar/" + response.id + "/0";
+	@endif
+
                                                     } else {
                                                         window.location = "{{ URL::route('login.callback') }}";
                                                     }
