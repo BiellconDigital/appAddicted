@@ -112,6 +112,12 @@ Route::filter('csrf', function()
 Route::filter('auth-facebook', function()
 {
     try {
+        
+        if(Session::has('friend')) {
+            Session::forget('friend');
+        }
+            
+        
                 if( isset($_REQUEST['request_ids']) ) {
                     try {
                         Session::put('friend', 'yes');
@@ -133,7 +139,7 @@ Route::filter('auth-facebook', function()
         if (isset($objData['app_data'])) {
             $sourceData = $objData['app_data']; // yay you got the damn data in an string, slow c
             Session::put('app_data', $sourceData);
-	        Session::put('friend', 'yes');
+            Session::put('friend', 'yes');
     //        setcookie("app_data", $sourceData, time()+1500);
         }
 

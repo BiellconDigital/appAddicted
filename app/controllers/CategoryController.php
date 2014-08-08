@@ -35,6 +35,7 @@ class CategoryController extends BaseController {
         
         public function amigos($idCate) {
             try {
+                $filtrado = false;
                 FacebookSession::setDefaultApplication(Config::get('facebook')['appId'],Config::get('facebook')['secret']);
                 //$pageHelper = new FacebookPageTabHelper(Config::get('facebook')['appId'],Config::get('facebook')['secret']);
                 //$helper = new FacebookRedirectLoginHelper( Config::get('app')['url'] . '/login/fb/callback' );
@@ -64,6 +65,7 @@ class CategoryController extends BaseController {
 			if(stristr($friend->name, $search) === FALSE) {
 //                        if (substr_count($friend->name, $search) <= 0) {
                             array_forget($friends, $key);
+                            $filtrado = true;
                             continue;
                         }
                         
@@ -95,7 +97,7 @@ class CategoryController extends BaseController {
 
                 return View::make('amigos')
                         ->with('user_friends', $friends)
-                        ->with('idCate', $idCate);
+                        ->with('idCate', $idCate)->with('filtrado', $filtrado);
             } catch (FacebookAuthorizationException $e) {
                 return Redirect::to('/sesionexpirada')->with('message', 'Su sesión ha expirado. Por favor haga click en reiniciar.');
             } catch (\Exception $e) {

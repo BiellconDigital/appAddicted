@@ -19,10 +19,14 @@
         <div id="formInvitar" class="row">
             <br/>
             <div class="form-group has-feedback">
-              <label class="control-label col-xs-5 text-white" for="search"></label>
+                <label class="control-label col-xs-5" for="search">
+                    @if($filtrado)
+                    <a href="" onclick="formVictims.submit();" class="text-black h6">Mostrar todos</a>
+                    @endif
+                </label>
               <div class="col-xs-7">
                 <input type="text" class="form-control input-sm" id="search3" name="search">
-                <span class="glyphicon glyphicon-search form-control-feedback"></span>
+                <span class="glyphicon glyphicon-search form-control-feedback" onclick="formVictims.submit();"></span>
               </div>
             </div>
             

@@ -3,12 +3,7 @@
     <style>
         body {
             background-image: url({{ URL::asset('img/bg-inicio.jpg') }});
+            background-position-x: -37px;
         }    
     </style>
-    @if(Session::has('message'))
-            <div class="alert alert-dismissable">
-              <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-              {{ Session::get('message')}}
-            </div>
-    @endif
 @stop
