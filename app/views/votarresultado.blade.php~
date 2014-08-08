@@ -22,7 +22,7 @@
         </div>
         <br/><br/>
         <p class="text-center text-white">
-            <a class="boton salir" href="" onclick="salir()">Chau! ;)</a>
+            <a class="boton salir" href="" onclick="salir()">Chau! ;) <i class=""><img src="{{asset('img/icono-enviar.png')}}" width="30" /></i></a>
         </p>
 
     <script type="text/javascript">

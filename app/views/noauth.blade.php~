@@ -17,7 +17,7 @@
             </p>
             <br/><br/><br/><br/>
             <p class="text-center">
-                <a class="boton ingresar" href="">Empieza aquí!</a>
+                <a class="boton ingresar" href="">Empieza aquí! <i class=""><img src="{{asset('img/icono-enviar.png')}}"/></i></a>
             </p>
         @endif
                     

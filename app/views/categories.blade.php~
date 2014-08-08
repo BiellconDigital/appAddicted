@@ -33,7 +33,7 @@
     <div class="text-center">
         <br/><br/>
         <a class="boton-small" href="{{route('ranking')}}">
-            Mira el Ranking
+            Mira el Ranking <i class=""><img src="{{asset('img/icono-enviar.png')}}" width="30" /></i>
         </a> 
     </div>
 

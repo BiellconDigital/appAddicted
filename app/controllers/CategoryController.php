@@ -61,7 +61,8 @@ class CategoryController extends BaseController {
                             array_forget($friends, $key);
                             continue;
                         }
-                        if (substr_count($friend->name, $search) <= 0) {
+			if(stristr($friend->name, $search) === FALSE) {
+//                        if (substr_count($friend->name, $search) <= 0) {
                             array_forget($friends, $key);
                             continue;
                         }

@@ -14,7 +14,7 @@
     <div class="text-center">
         <br/><br/>
         <a class="boton" href="{{route('categorias')}}">
-            OK
+            OK <i class=""><img src="{{asset('img/icono-enviar.png')}}" width="30" /></i>
         </a> 
     </div>
 

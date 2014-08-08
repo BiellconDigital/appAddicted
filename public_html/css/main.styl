@@ -30,6 +30,7 @@ html
 body
     background-image url(../img/bg.jpg)
     background-repeat no-repeat
+    font-family Frutiger-lt !important
     padding 0
     margin 0
     padding-top 18px
@@ -72,9 +73,10 @@ body
     height 433px
     input[type='text']
     input[type='date']
+    input[type='select']
         border-radius 0
         color fucsia
-        font-size 1.2em
+        font-size 1.1em
         padding 2.5px 5px 1px 8px !important
         width 100%
     label
@@ -122,10 +124,25 @@ body
     color white
     font-family Frutiger-lt !important
     font-size 1.5em
-    padding 0.4em 0.6em
+    padding 0.5em 2.2em 0.5em 0.6em
+    background-image url(../img/icono-enviar.png)
+    background-repeat no-repeat
+    background-position right
+    text-decoration none
 .boton-small
-    font-size 1.2em
-    padding 0.3em 0.6em
+    font-size 1.3em
+
+.boton-small:hover
+    background-color white
+    background-image url(../img/icono-enviar-black.png)
+    color black
+    text-decoration none
+
+.boton:hover
+    background-color white
+    background-image url(../img/icono-enviar-black.png)
+    color black
+    text-decoration none
 
 .icono-enviar
     background-image url(../img/icono-enviar.png)
@@ -146,4 +163,13 @@ body
     color white !important
     background-color fucsia !important
 
+.linkapp
+    color white
 
+.linkapp:hover
+    color blue
+
+.selectAddicted
+    font-family Frutiger-lt !important
+    font-size 1.1em
+    color fucsia

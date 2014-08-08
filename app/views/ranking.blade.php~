@@ -51,7 +51,7 @@
     <div class="text-center">
         <br/><br/>
         <a class="boton-small" href="{{route('categorias')}}">
-            Reportar más víctimas
+            Reportar más víctimas <i class=""><img src="{{asset('img/icono-enviar.png')}}" width="30" /></i>
         </a> 
     </div>
 

@@ -56,7 +56,7 @@
     <div class="text-center">
         <br/><br/><br/>
         <a class="boton" href="{{route('categorias')}}">
-            Cambiar de categoría
+            Cambiar de categoria
         </a>
     </div>
 

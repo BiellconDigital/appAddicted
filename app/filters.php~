@@ -133,7 +133,6 @@ Route::filter('auth-facebook', function()
         if (isset($objData['app_data'])) {
             $sourceData = $objData['app_data']; // yay you got the damn data in an string, slow c
             Session::put('app_data', $sourceData);
-	        Session::put('friend', 'yes');
     //        setcookie("app_data", $sourceData, time()+1500);
         }
 

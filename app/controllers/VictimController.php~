@@ -149,7 +149,7 @@ class VictimController extends BaseController {
                         'POST',
                         "/$from_id/notifications",
                         array (
-                            'href' => 'html/index.php/victimas/redirigir-video/' . $uid,
+                            'href' => 'victimas/redirigir-video/' . $uid,
                             'template' => " @[" . $uid . "] ha aceptado tu invitación para participar",//@[$uid] @[596824621]
                         )
                         , 'v1.0' 

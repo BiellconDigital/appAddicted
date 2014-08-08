@@ -49,7 +49,7 @@ class InscripcionController extends BaseController {
                     'form_nombre' => array('required', 'min:2'),
                     'form_apellido' => array('required', 'min:2'),
                     'form_fecha_nacimiento' => array('required', 'date_format:"d-m-Y"'),
-                    'form_pais' => 'required|min:3',
+                    'form_pais' => 'required|min:3|different:País',
                     'form_acepta_term' => array('required')
                 );
 
@@ -63,13 +63,6 @@ class InscripcionController extends BaseController {
 //                    return Redirect::back()->with_input(Input::except('_token', 'inscrito'))
 //                            ->with('message', 'Ingrese todos los campos correctamente.');
                 }
-
-                if (Input::get('form_pais') == "País")
-                {
-                    return Redirect::to('/inscripcion/' . $id)->withInput(Input::except('_token'))
-                            ->with('message', 'Ingrese todos los campos correctamente.');
-                }
-
 
                 if (!$user->update(Input::except('_token'))) {
                     return Redirect::back()

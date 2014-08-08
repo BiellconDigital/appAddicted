@@ -41,7 +41,7 @@
             <div class="form-group">
                 <div class="checkbox text-white">
                     {{ Form::checkbox("form_acepta_term", Input::old("form_acepta_term"), ["placeholder" => "Nombre", "class" => "form-control"]) }}
-                    He leído los <a href="/html/files/Terminos y condiciones.pdf" target="_blank">Términos y condiciones</a> de uso y estoy de acuerdo.
+                    He leído los <a href="/html/files/Terminos y condiciones.pdf" target="_blank">Términos y codinciones</a> de uso y estoy de acuerdo.
                 </div>
             </div>
             {{ Form::hidden("inscrito", 1) }}

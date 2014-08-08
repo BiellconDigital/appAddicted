@@ -10,7 +10,7 @@
     <div class="text-center">
         <br/><br/><br/><br/>
         <a class="boton sendRequest" href="" onclick="reiniciar()">
-            Reiniciar <i class=""><img src="{{asset('img/icono-enviar.png')}}" width="20" /></i>
+            Reiniciar
         </a> 
     </div>
     <script type="text/javascript">

@@ -35,11 +35,11 @@
     <div class="text-center">
         <br/><br/><br/>
         <a class="boton-small" href="{{route('categorias')}}">
-            Reportar más victimas
+            Reportar más victimas <i class=""><img src="{{asset('img/icono-enviar.png')}}" width="30" /></i>
         </a> 
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <a class="boton-small" href="{{route('ranking')}}">
-            Mira el Ranking
+            Mira el Ranking <i class=""><img src="{{asset('img/icono-enviar.png')}}" width="30" /></i>
         </a> 
     </div>
 
